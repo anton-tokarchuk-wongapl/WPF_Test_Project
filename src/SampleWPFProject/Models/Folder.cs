@@ -5,7 +5,6 @@ namespace SampleWPFProject.Models
 {
     public class Folder : ContentBase
     {
-
         public Folder(string name, string description, ObservableCollection<ContentBase> contentList)
         {
             this.Name = name;

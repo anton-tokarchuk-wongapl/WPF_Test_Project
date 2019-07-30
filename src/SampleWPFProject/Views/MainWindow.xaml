@@ -17,16 +17,23 @@
         <viewmodels:ContentViewModel>
     </Window.DataContext>
     -->
-    <Grid>
+    <Grid ShowGridLines="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="474*" />
+            <RowDefinition Height="95*" />
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition />
+            <ColumnDefinition Width="3*" />
         </Grid.ColumnDefinitions>
 
-        <TextBlock Text="Some text" />
         <TreeView
             x:Name="ContentTreeView"
+            Grid.Row="0"
             Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Width="148"
+            Height="474"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             ItemsSource="{Binding Content}">
@@ -36,6 +43,20 @@
                 </HierarchicalDataTemplate>
             </TreeView.Resources>
         </TreeView>
+
+        <ListView
+            Name="ItemsList"
+            Grid.Row="0"
+            Grid.Column="1"
+            ItemsSource="{Binding Content}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Description}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+
     </Grid>
 
 

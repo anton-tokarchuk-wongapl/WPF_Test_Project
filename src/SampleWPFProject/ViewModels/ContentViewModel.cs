@@ -34,8 +34,6 @@ namespace SampleWPFProject.ViewModels
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
             }
-
-            // 
         }
     }
 }
