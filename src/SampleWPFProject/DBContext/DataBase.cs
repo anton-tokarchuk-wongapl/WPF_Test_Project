@@ -20,12 +20,23 @@ namespace SampleWPFProject.DBContext
 
         private readonly DataManager dataManager;
 
+        private readonly ObservableCollection<ContentBase> defaultCollection;
+
         public ObservableCollection<ContentBase> FullContentCollection { get; set; }
 
         public ObservableCollection<ContentFolder> FoldersCollection { get; set; }
 
+        private DataBase()
+        {
+            dataManager = new DataManager();
+
+            defaultCollection = dataManager.CreateRandomData();
+            FullContentCollection = dataManager.CreateRandomData();
+            FoldersCollection = CreateFoldersCollection(FullContentCollection);
+        }
+
         public ObservableCollection<ContentBase> GetContentByFolderName(ContentFolder folder)
-            => GetContentByFolderNameRecursive(folder, dataManager.CreateRandomData());
+            => GetContentByFolderNameRecursive(folder, FullContentCollection);
 
         public void EditContent(ContentBase content)
             => EditItemByObjectRecursive(content, FullContentCollection);
@@ -77,14 +88,6 @@ namespace SampleWPFProject.DBContext
             return fullContentFolder;
         }
 
-        private DataBase()
-        {
-            dataManager = new DataManager();
-
-            FullContentCollection = dataManager.CreateRandomData();
-            FoldersCollection = CreateFoldersCollection(FullContentCollection);
-        }
-
         private ObservableCollection<ContentFolder> CreateFoldersCollection(ObservableCollection<ContentBase> collection)
         {
             var folders = new ObservableCollection<ContentFolder>();
@@ -97,6 +100,8 @@ namespace SampleWPFProject.DBContext
                     folders.Add(folder);
                 }
             }
+
+            FullContentCollection = defaultCollection;
 
             return folders;
         }
