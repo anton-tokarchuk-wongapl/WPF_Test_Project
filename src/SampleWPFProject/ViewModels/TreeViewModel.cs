@@ -1,22 +1,20 @@
 ﻿using SampleWPFProject.Models;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 
 namespace SampleWPFProject.ViewModels
 {
-    public class TreeViewModel : INotifyPropertyChanged
+    public class TreeViewModel : BaseVM
     {
-        public ObservableCollection<Folder> FoldersList;
+        private ObservableCollection<ContentFolder> foldersList { get; set; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void OnPropertyChanged([CallerMemberName]string prop = "")
+        public ObservableCollection<ContentFolder> FoldersList
         {
-            if (PropertyChanged != null)
+            get { return foldersList; }
+            set
             {
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+                foldersList = value;
+                OnPropertyChanged("FoldersList");
             }
         }
     }
 }
- 

@@ -1,0 +1,67 @@
+[
+  {
+    "Name": "Folder0",
+    "Description": "SomeFolderDescription",
+    "LastChangedDate": "0001-01-01T00:00:00",
+    "Children": [
+      {
+        "Name": "File0",
+        "Description": "SomeFileDescription",
+        "LastChangedDate": "0001-01-01T00:00:00",
+        "Children": null
+      }
+    ]
+  },
+  {
+    "Name": "Folder1",
+    "Description": "SomeFolderDescription",
+    "LastChangedDate": "0001-01-01T00:00:00",
+    "Children": [
+      {
+        "Name": "File0",
+        "Description": "SomeFileDescription",
+        "LastChangedDate": "0001-01-01T00:00:00",
+        "Children": null
+      }
+    ]
+  },
+  {
+    "Name": "Folder2",
+    "Description": "SomeFolderDescription",
+    "LastChangedDate": "0001-01-01T00:00:00",
+    "Children": [
+      {
+        "Name": "File0",
+        "Description": "SomeFileDescription",
+        "LastChangedDate": "0001-01-01T00:00:00",
+        "Children": null
+      }
+    ]
+  },
+  {
+    "Name": "Folder3",
+    "Description": "SomeFolderDescription",
+    "LastChangedDate": "0001-01-01T00:00:00",
+    "Children": [
+      {
+        "Name": "File0",
+        "Description": "SomeFileDescription",
+        "LastChangedDate": "0001-01-01T00:00:00",
+        "Children": null
+      }
+    ]
+  },
+  {
+    "Name": "Folder4",
+    "Description": "SomeFolderDescription",
+    "LastChangedDate": "0001-01-01T00:00:00",
+    "Children": [
+      {
+        "Name": "File0",
+        "Description": "SomeFileDescription",
+        "LastChangedDate": "0001-01-01T00:00:00",
+        "Children": null
+      }
+    ]
+  }
+]

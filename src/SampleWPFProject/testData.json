@@ -1,0 +1,37 @@
+[
+  {
+    "Name": "ParentFolder",
+    "Description": "Is a parent folder of content",
+    "LastChangedDate": "",
+    "Children": [
+      {
+        "Name": "ChildFolder",
+        "Description": "ChildFolder inside a parent folder",
+        "LastChangedDate": "",
+        "Children": [
+          {
+            "Name": "SomeFile",
+            "Description": "Is a some file around parent folder",
+            "LastChangedDate": "",
+            "Children": []
+          }
+        ]
+      },
+      {
+        "Name": "ParentFolder",
+        "Description": "Is a parent folder of content",
+        "LastChangedDate": "",
+        "Children": []
+      }
+    ]
+  },
+  {
+    {
+      "Name": "SomeFile",
+      "Description": "Is a some file around parent folder",
+      "LastChangedDate": "",
+      "Children": []
+    }
+  }
+
+]
