@@ -4,6 +4,9 @@ using System.Collections.ObjectModel;
 
 namespace SampleWPFProject.DBContext
 {
+    /// <summary>
+    /// Contains all method for wokring with targed of Data.
+    /// </summary>
     public class DataBase
     {
         private static DataBase instance;
@@ -35,6 +38,13 @@ namespace SampleWPFProject.DBContext
             FoldersCollection = CreateFoldersCollection(FullContentCollection);
         }
 
+        /// <summary>
+        /// Method returns children from folder
+        /// </summary>
+        /// <param name="folder"></param>
+        /// <returns>
+        /// Collection children of a folder
+        /// </returns>
         public ObservableCollection<ContentBase> GetContentByFolderName(ContentFolder folder)
             => GetContentByFolderNameRecursive(folder, FullContentCollection);
 

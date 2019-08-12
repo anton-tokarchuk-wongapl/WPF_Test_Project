@@ -31,7 +31,6 @@ namespace SampleWPFProject.Helpers
         private ObservableCollection<ContentBase> CreateFilesList()
         {
             var rndNum = 10;
-
             var filesList = new ObservableCollection<ContentBase>();
 
             for (int i = 0; i < rndNum; ++i)
