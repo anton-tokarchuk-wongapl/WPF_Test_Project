@@ -13,6 +13,8 @@ namespace SampleWPFProject.Models
 
         protected DateTime lastChangedDate;
 
+        protected string lastChangedDateShort;
+
         private ObservableCollection<ContentBase> content;
 
         public int Id
@@ -44,6 +46,9 @@ namespace SampleWPFProject.Models
                 OnPropertyChanged("Description");
             }
         }
+
+        public string LastChangedDateShort
+            => lastChangedDate.ToShortDateString();
 
         public DateTime LastChangedDate
         {

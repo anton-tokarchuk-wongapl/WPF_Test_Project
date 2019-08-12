@@ -59,7 +59,7 @@
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Name}">Name</GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Description}">Description</GridViewColumn>
-                    <!--<GridViewColumn DisplayMemberBinding="{Binding Path=LastDateChanged}" />-->
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=LastChangedDateShort}">ChangedDate</GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>

@@ -9,14 +9,14 @@ namespace SampleWPFProject.ViewModels
     {
         private readonly DataBase db;
 
-        private readonly ICommand saveEditableItem;
+        public ICommand SaveEditableItem { get; }
 
-        private ContentBase editableItem { get; set; }
+        private ContentBase editableItem;
 
         public TextBlockViewModel()
         {
             db = DataBase.GetInstance();
-            saveEditableItem = new DelegateCommand(obj =>
+            SaveEditableItem = new DelegateCommand(obj =>
             {
                 db.EditContent(EditableItem);
             });
@@ -29,14 +29,6 @@ namespace SampleWPFProject.ViewModels
             {
                 editableItem = value;
                 OnPropertyChanged("EditableItem");
-            }
-        }
-
-        public ICommand SaveEditableItem
-        {
-            get
-            {
-                return saveEditableItem;
             }
         }
     }

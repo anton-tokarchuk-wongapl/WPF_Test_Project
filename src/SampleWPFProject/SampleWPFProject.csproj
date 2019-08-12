@@ -68,7 +68,6 @@
     <Compile Include="DBContext\DataBase.cs" />
     <Compile Include="Helpers\BindableSelectedItemBehavior.cs" />
     <Compile Include="Helpers\DataManager.cs" />
-    <Compile Include="Helpers\ExtensionMethods.cs" />
     <Compile Include="Models\BaseVM.cs" />
     <Compile Include="Models\ContentBase.cs" />
     <Compile Include="Models\ContentFile.cs" />
@@ -113,7 +112,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="testData.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
