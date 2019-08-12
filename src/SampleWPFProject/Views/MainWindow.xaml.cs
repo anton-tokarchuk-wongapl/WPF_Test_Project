@@ -1,5 +1,4 @@
 ﻿using SampleWPFProject.ViewModels;
-
 using System.Windows;
 
 namespace SampleWPFProject.Views
@@ -12,8 +11,7 @@ namespace SampleWPFProject.Views
         public MainWindow()
         {
             InitializeComponent();
-
-            DataContext = new ContentViewModel();
+            DataContext = new MainViewModel();
         }
     }
 }

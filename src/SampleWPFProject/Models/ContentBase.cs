@@ -1,31 +1,29 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace SampleWPFProject.Models
 {
-    public abstract class ContentBase : INotifyPropertyChanged
+    public abstract class ContentBase : BaseVM
     {
-        private ObservableCollection<ContentBase> content;
-
-        public ObservableCollection<ContentBase> Children
-        {
-            get { return content; }
-            set
-            {
-                content = value;
-                OnPropertyChanged("Children");
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
+        protected int id;
 
         protected string name;
 
         protected string description;
 
         protected DateTime lastChangedDate;
+
+        private ObservableCollection<ContentBase> content;
+
+        public int Id
+        {
+            get { return id; }
+            set
+            {
+                id = value;
+                OnPropertyChanged("Id");
+            }
+        }
 
         public string Name
         {
@@ -57,11 +55,13 @@ namespace SampleWPFProject.Models
             }
         }
 
-        public void OnPropertyChanged([CallerMemberName]string prop = "")
+        public ObservableCollection<ContentBase> Children
         {
-            if (PropertyChanged != null)
+            get { return content; }
+            set
             {
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+                content = value;
+                OnPropertyChanged("Children");
             }
         }
     }
