@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 
 namespace SampleWPFProject.ViewModels
 {
-    public class ListViewModel : BaseVM
+    public class ListViewModel : NotifyPropertyChanged
     {
         private readonly DataBase db;
 
@@ -12,9 +12,21 @@ namespace SampleWPFProject.ViewModels
 
         private ObservableCollection<ContentBase> contentList;
 
+        private ContentBase selectedItem;
+
         public ListViewModel()
         {
             db = DataBase.GetInstance();
+        }
+
+        public ContentBase SelectedItem
+        {
+            get { return selectedItem; }
+            set
+            {
+                selectedItem = value;
+                OnPropertyChanged("SelectedItem");
+            }
         }
 
         public ObservableCollection<ContentBase> ContentList
@@ -36,7 +48,7 @@ namespace SampleWPFProject.ViewModels
 
                 if (selectedFolder != null)
                 {
-                    ContentList = db.GetContentByFolderName(selectedFolder);
+                    ContentList = db.GetContentByFolder(selectedFolder);
                 }
 
                 OnPropertyChanged("SelectedFolder");

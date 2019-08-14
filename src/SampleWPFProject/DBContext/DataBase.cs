@@ -45,8 +45,8 @@ namespace SampleWPFProject.DBContext
         /// <returns>
         /// Collection children of a folder
         /// </returns>
-        public ObservableCollection<ContentBase> GetContentByFolderName(ContentFolder folder)
-            => GetContentByFolderNameRecursive(folder, FullContentCollection);
+        public ObservableCollection<ContentBase> GetContentByFolder(ContentFolder folder)
+            => GetContentByFolderRecursive(folder, FullContentCollection);
 
         public void EditContent(ContentBase content)
             => EditItemByObjectRecursive(content, FullContentCollection);
@@ -78,7 +78,7 @@ namespace SampleWPFProject.DBContext
             }
         }
 
-        private ObservableCollection<ContentBase> GetContentByFolderNameRecursive(ContentFolder folder, ObservableCollection<ContentBase> collection)
+        private ObservableCollection<ContentBase> GetContentByFolderRecursive(ContentFolder folder, ObservableCollection<ContentBase> collection)
         {
             var fullContentFolder = new ObservableCollection<ContentBase>();
 
@@ -91,7 +91,7 @@ namespace SampleWPFProject.DBContext
                 }
                 else
                 {
-                    fullContentFolder = GetContentByFolderNameRecursive(folder, collection[i].Children);
+                    fullContentFolder = GetContentByFolderRecursive(folder, collection[i].Children);
                 }
             }
 
@@ -106,7 +106,7 @@ namespace SampleWPFProject.DBContext
             {
                 if (collection[i] is ContentFolder)
                 {
-                    var folder = CheckingContent((ContentFolder)collection[i]);
+                    var folder = SortContentByFolder((ContentFolder)collection[i]);
                     folders.Add(folder);
                 }
             }
@@ -116,7 +116,7 @@ namespace SampleWPFProject.DBContext
             return folders;
         }
 
-        private ContentFolder CheckingContent(ContentFolder folder)
+        private ContentFolder SortContentByFolder(ContentFolder folder) // should to rename
         {
             var newCollection = new ObservableCollection<ContentBase>();
 
@@ -124,7 +124,7 @@ namespace SampleWPFProject.DBContext
             {
                 if (folder.Children[i] is ContentFolder)
                 {
-                    newCollection.Add(CheckingContent((ContentFolder)folder.Children[i]));
+                    newCollection.Add(SortContentByFolder((ContentFolder)folder.Children[i]));
                 }
             }
 

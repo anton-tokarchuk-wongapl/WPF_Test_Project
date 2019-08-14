@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace SampleWPFProject.Models
 {
-    public abstract class BaseVM : INotifyPropertyChanged
+    public abstract class NotifyPropertyChanged : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

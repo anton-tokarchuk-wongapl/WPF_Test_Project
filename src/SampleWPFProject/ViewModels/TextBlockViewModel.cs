@@ -1,34 +1,32 @@
-﻿using SampleWPFProject.Commands;
-using SampleWPFProject.DBContext;
-using SampleWPFProject.Models;
-using System.Windows.Input;
+﻿using SampleWPFProject.Models;
 
 namespace SampleWPFProject.ViewModels
 {
-    public class TextBlockViewModel : BaseVM
+    public class TextBlockViewModel : NotifyPropertyChanged
     {
-        private readonly DataBase db;
+        private string name;
 
-        public ICommand SaveEditableItem { get; }
+        private string description;
 
-        private ContentBase editableItem;
+        public ContentBase EditableItem { get; set; }
 
-        public TextBlockViewModel()
+        public string Name
         {
-            db = DataBase.GetInstance();
-            SaveEditableItem = new DelegateCommand(obj =>
-            {
-                db.EditContent(EditableItem);
-            });
-        }
-
-        public ContentBase EditableItem
-        {
-            get { return editableItem; }
+            get { return name; }
             set
             {
-                editableItem = value;
-                OnPropertyChanged("EditableItem");
+                name = value;
+                OnPropertyChanged("Name");
+            }
+        }
+
+        public string Description
+        {
+            get { return description; }
+            set
+            {
+                description = value;
+                OnPropertyChanged("Description");
             }
         }
     }

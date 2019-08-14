@@ -23,7 +23,7 @@
     <Grid x:Name="ParentGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="474*" />
-            <RowDefinition Height="95*" />
+            <RowDefinition Height="120*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -54,7 +54,7 @@
             Grid.Row="0"
             Grid.Column="1"
             ItemsSource="{Binding Path=ListViewModel.ContentList}"
-            SelectedItem="{Binding Path=TextBlockViewModel.EditableItem}">
+            SelectedItem="{Binding Path=ListViewModel.SelectedItem}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Name}">Name</GridViewColumn>
@@ -68,18 +68,21 @@
             Name="StackPanelElement"
             Grid.Row="1"
             Grid.Column="0"
-            Grid.ColumnSpan="2"
-            DataContext="{Binding Path=TextBlockViewModel}">
+            Grid.ColumnSpan="2">
             <TextBlock
                 Width="150"
                 HorizontalAlignment="Left"
                 Text="Name" />
-            <TextBox Text="{Binding Path=EditableItem.Name, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBox Text="{Binding Path=TextBlockViewModel.Name, UpdateSourceTrigger=PropertyChanged}" />
             <TextBlock Text="Description" />
-            <TextBox Text="{Binding Path=EditableItem.Description, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBox Text="{Binding Path=TextBlockViewModel.Description, UpdateSourceTrigger=PropertyChanged}" />
+            <Button
+                x:Name="EditItemButton"
+                Command="{Binding EditItem}"
+                Content="EditItem" />
             <Button
                 x:Name="SaveItemButton"
-                Command="{Binding SaveEditableItem}"
+                Command="{Binding SaveItem}"
                 Content="SaveItem" />
         </StackPanel>
     </Grid>

@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace SampleWPFProject.Models
 {
-    public abstract class ContentBase : BaseVM
+    public abstract class ContentBase : NotifyPropertyChanged
     {
         protected int id;
 
