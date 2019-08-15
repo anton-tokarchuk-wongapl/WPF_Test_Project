@@ -1,4 +1,6 @@
-﻿namespace SampleWPFProject.Models
+﻿using System;
+
+namespace SampleWPFProject.Models
 {
     public class ContentFile : ContentBase
     {
@@ -7,6 +9,7 @@
             Id = id;
             Name = name;
             Description = description;
+            LastChangedDate = DateTime.Now;
         }
     }
 }

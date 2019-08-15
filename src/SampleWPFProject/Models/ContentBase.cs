@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace SampleWPFProject.Models
 {
-    public abstract class ContentBase : BaseVM
+    public abstract class ContentBase : NotifyPropertyChanged
     {
         protected int id;
 
@@ -12,6 +12,10 @@ namespace SampleWPFProject.Models
         protected string description;
 
         protected DateTime lastChangedDate;
+
+        protected string lastChangedDateShort;
+
+        public ContentBase ParentItem;
 
         private ObservableCollection<ContentBase> content;
 
@@ -44,6 +48,9 @@ namespace SampleWPFProject.Models
                 OnPropertyChanged("Description");
             }
         }
+
+        public string LastChangedDateShort
+            => lastChangedDate.ToShortDateString();
 
         public DateTime LastChangedDate
         {

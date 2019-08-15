@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 
 namespace SampleWPFProject.Models
 {
@@ -10,6 +11,7 @@ namespace SampleWPFProject.Models
             Name = name;
             Description = description;
             Children = contentList;
+            LastChangedDate = DateTime.Now;
         }
     }
 }

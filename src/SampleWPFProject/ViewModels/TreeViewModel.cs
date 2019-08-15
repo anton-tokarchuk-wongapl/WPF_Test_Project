@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace SampleWPFProject.ViewModels
 {
-    public class TreeViewModel : BaseVM
+    public class TreeViewModel : NotifyPropertyChanged
     {
         private ObservableCollection<ContentFolder> foldersList { get; set; }
 

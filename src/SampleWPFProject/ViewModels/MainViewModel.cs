@@ -1,34 +1,74 @@
-﻿using SampleWPFProject.DBContext;
+﻿using System.Windows.Input;
+using SampleWPFProject.Commands;
+using SampleWPFProject.DBContext;
 using SampleWPFProject.Models;
 
 namespace SampleWPFProject.ViewModels
 {
-    public class MainViewModel : BaseVM
+    /// <summary>
+    /// Class contains all ViewModels and commands for working with them.
+    /// </summary>
+    public class MainViewModel : NotifyPropertyChanged
     {
         private readonly DataBase db;
 
-        private readonly TreeViewModel treeViewModel;
+        public TreeViewModel TreeViewModel { get; }
 
-        private ListViewModel listViewModel;
+        public ListViewModel ListViewModel { get; }
 
-        private TextBlockViewModel textBlockViewModel;
+        public TextBlockViewModel TextBlockViewModel { get; }
 
         public MainViewModel()
         {
             db = DataBase.GetInstance();
-            treeViewModel = new TreeViewModel();
-            treeViewModel.FoldersList = db.FoldersCollection;
-            listViewModel = new ListViewModel();
-            textBlockViewModel = new TextBlockViewModel();
+
+            TreeViewModel = new TreeViewModel();
+            TreeViewModel.FoldersList = db.FoldersCollection;
+            ListViewModel = new ListViewModel();
+            TextBlockViewModel = new TextBlockViewModel();
         }
 
-        public TreeViewModel TreeViewModel 
-            => treeViewModel;
+        public ICommand SaveItem
+        {
+            get
+            {
+                return new DelegateCommand(obj =>
+                {
+                    var name = TextBlockViewModel.Name;
+                    var description = TextBlockViewModel.Description;
+                    var editableItem = TextBlockViewModel.EditableItem;
 
-        public ListViewModel ListViewModel 
-            => listViewModel;
+                    if (!string.Equals(name, editableItem.Name) || !string.Equals(description, editableItem.Description))
+                    {
+                        editableItem.Name = name;
+                        editableItem.Description = description;
 
-        public TextBlockViewModel TextBlockViewModel
-            => textBlockViewModel;
+                        db.EditContent(editableItem);
+
+                        TextBlockViewModel.Name = string.Empty;
+                        TextBlockViewModel.Description = string.Empty;
+                    }
+                });
+            }
+        }
+
+        public ICommand EditItem
+        {
+            get
+            {
+                return new DelegateCommand(obj =>
+                {
+                    var content = ListViewModel.SelectedItem;
+
+                    if (content != null)
+                    {
+                        TextBlockViewModel.Name = content.Name;
+                        TextBlockViewModel.Description = content.Description;
+
+                        TextBlockViewModel.EditableItem = content;
+                    }
+                });
+            }
+        }
     }
 }
