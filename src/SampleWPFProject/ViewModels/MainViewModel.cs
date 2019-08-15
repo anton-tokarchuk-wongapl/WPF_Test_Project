@@ -5,6 +5,9 @@ using SampleWPFProject.Models;
 
 namespace SampleWPFProject.ViewModels
 {
+    /// <summary>
+    /// Class contains all ViewModels and commands for working with them.
+    /// </summary>
     public class MainViewModel : NotifyPropertyChanged
     {
         private readonly DataBase db;
@@ -15,48 +18,57 @@ namespace SampleWPFProject.ViewModels
 
         public TextBlockViewModel TextBlockViewModel { get; }
 
-        public ICommand SaveItem { get; }
-
-        public ICommand EditItem { get; }
-
         public MainViewModel()
         {
             db = DataBase.GetInstance();
+
             TreeViewModel = new TreeViewModel();
             TreeViewModel.FoldersList = db.FoldersCollection;
             ListViewModel = new ListViewModel();
             TextBlockViewModel = new TextBlockViewModel();
+        }
 
-            EditItem = new DelegateCommand(obj =>
+        public ICommand SaveItem
+        {
+            get
             {
-                var content = ListViewModel.SelectedItem;
-
-                if (content != null)
+                return new DelegateCommand(obj =>
                 {
-                    TextBlockViewModel.Name = content.Name;
-                    TextBlockViewModel.Description = content.Description;
+                    var name = TextBlockViewModel.Name;
+                    var description = TextBlockViewModel.Description;
+                    var editableItem = TextBlockViewModel.EditableItem;
 
-                    TextBlockViewModel.EditableItem = content;
-                }
-            });
+                    if (!string.Equals(name, editableItem.Name) || !string.Equals(description, editableItem.Description))
+                    {
+                        editableItem.Name = name;
+                        editableItem.Description = description;
 
-            SaveItem = new DelegateCommand(obj =>
+                        db.EditContent(editableItem);
+
+                        TextBlockViewModel.Name = string.Empty;
+                        TextBlockViewModel.Description = string.Empty;
+                    }
+                });
+            }
+        }
+
+        public ICommand EditItem
+        {
+            get
             {
-                var name = TextBlockViewModel.Name;
-                var description = TextBlockViewModel.Description;
-                var editableItem = TextBlockViewModel.EditableItem;
-
-                if (!string.Equals(name, editableItem.Name) || !string.Equals(description, editableItem.Description))
+                return new DelegateCommand(obj =>
                 {
-                    editableItem.Name = name;
-                    editableItem.Description = description;
+                    var content = ListViewModel.SelectedItem;
 
-                    db.EditContent(editableItem);
+                    if (content != null)
+                    {
+                        TextBlockViewModel.Name = content.Name;
+                        TextBlockViewModel.Description = content.Description;
 
-                    TextBlockViewModel.Name = string.Empty;
-                    TextBlockViewModel.Description = string.Empty;
-                }
-            });
+                        TextBlockViewModel.EditableItem = content;
+                    }
+                });
+            }
         }
     }
 }

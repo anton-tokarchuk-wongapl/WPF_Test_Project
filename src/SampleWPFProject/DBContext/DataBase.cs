@@ -38,13 +38,6 @@ namespace SampleWPFProject.DBContext
             FoldersCollection = CreateFoldersCollection(FullContentCollection);
         }
 
-        /// <summary>
-        /// Method returns children from folder
-        /// </summary>
-        /// <param name="folder"></param>
-        /// <returns>
-        /// Collection children of a folder
-        /// </returns>
         public ObservableCollection<ContentBase> GetContentByFolder(ContentFolder folder)
             => GetContentByFolderRecursive(folder, FullContentCollection);
 
@@ -116,7 +109,7 @@ namespace SampleWPFProject.DBContext
             return folders;
         }
 
-        private ContentFolder SortContentByFolder(ContentFolder folder) // should to rename
+        private ContentFolder SortContentByFolder(ContentFolder folder)
         {
             var newCollection = new ObservableCollection<ContentBase>();
 

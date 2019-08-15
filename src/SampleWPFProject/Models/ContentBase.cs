@@ -15,6 +15,8 @@ namespace SampleWPFProject.Models
 
         protected string lastChangedDateShort;
 
+        public ContentBase ParentItem;
+
         private ObservableCollection<ContentBase> content;
 
         public int Id
