@@ -1,25 +1,26 @@
-﻿using SampleWPFProject.DBContext;
-using SampleWPFProject.Models;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
+using BLL.Models;
 
-namespace SampleWPFProject.ViewModels
+namespace WPFProject.ViewModels
 {
     public class ListViewModel : NotifyPropertyChanged
     {
-        private readonly DataBase db;
+        //private readonly string connection = @"C:\Users\atokar\Documents\WPF_Test_Project\localdb\localdb.sdf";
 
-        private ContentFolder selectedFolder;
+        //private readonly IRepository repository;
 
-        private ObservableCollection<ContentBase> contentList;
+        private ContentFolderModel selectedFolder;
 
-        private ContentBase selectedItem;
+        private ObservableCollection<ContentBaseModel> contentList;
+
+        private ContentBaseModel selectedItem;
 
         public ListViewModel()
         {
-            db = DataBase.GetInstance();
+            //repository = new ContentBaseRepository(connection);
         }
 
-        public ContentBase SelectedItem
+        public ContentBaseModel SelectedItem
         {
             get { return selectedItem; }
             set
@@ -29,7 +30,7 @@ namespace SampleWPFProject.ViewModels
             }
         }
 
-        public ObservableCollection<ContentBase> ContentList
+        public ObservableCollection<ContentBaseModel> ContentList
         {
             get { return contentList; }
             set
@@ -39,7 +40,7 @@ namespace SampleWPFProject.ViewModels
             }
         }
 
-        public ContentFolder SelectedFolder
+        public ContentFolderModel SelectedFolder
         {
             get { return selectedFolder; }
             set
@@ -48,7 +49,7 @@ namespace SampleWPFProject.ViewModels
 
                 if (selectedFolder != null)
                 {
-                    ContentList = db.GetContentByFolder(selectedFolder);
+                    //ContentList = db.GetContentByFolder(selectedFolder);
                 }
 
                 OnPropertyChanged("SelectedFolder");

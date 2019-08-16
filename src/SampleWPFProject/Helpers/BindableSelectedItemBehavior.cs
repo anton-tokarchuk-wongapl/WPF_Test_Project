@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Interactivity;
 
-namespace SampleWPFProject.Helpers
+namespace WPFProject.Helpers
 {
     public class BindableSelectedItemBehavior : Behavior<TreeView>
     {

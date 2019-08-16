@@ -1,13 +1,13 @@
-﻿using SampleWPFProject.Models;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
+using BLL.Models;
 
-namespace SampleWPFProject.ViewModels
+namespace WPFProject.ViewModels
 {
     public class TreeViewModel : NotifyPropertyChanged
     {
-        private ObservableCollection<ContentFolder> foldersList { get; set; }
+        private ObservableCollection<ContentFolderModel> foldersList { get; set; }
 
-        public ObservableCollection<ContentFolder> FoldersList
+        public ObservableCollection<ContentFolderModel> FoldersList
         {
             get { return foldersList; }
             set

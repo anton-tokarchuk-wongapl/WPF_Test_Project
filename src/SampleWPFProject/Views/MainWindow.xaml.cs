@@ -1,7 +1,7 @@
-﻿using SampleWPFProject.ViewModels;
+﻿using WPFProject.ViewModels;
 using System.Windows;
 
-namespace SampleWPFProject.Views
+namespace WPFProject.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

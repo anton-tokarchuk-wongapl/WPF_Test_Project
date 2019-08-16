@@ -1,12 +1,11 @@
-﻿using System;
+﻿using DAL.Entities.Enums;
+using System;
 using System.Collections.ObjectModel;
 
-namespace SampleWPFProject.Models
+namespace BLL.Models
 {
-    public abstract class ContentBase : NotifyPropertyChanged
+    public class ContentBaseModel : NotifyPropertyChanged
     {
-        protected int id;
-
         protected string name;
 
         protected string description;
@@ -15,18 +14,19 @@ namespace SampleWPFProject.Models
 
         protected string lastChangedDateShort;
 
-        public ContentBase ParentItem;
+        protected ObservableCollection<ContentBaseModel> children;
 
-        private ObservableCollection<ContentBase> content;
+        public int Id { get; set; }
 
-        public int Id
+        public int? ParentContentItemId { get; set; }
+
+        public ContentBaseModel ParentContentItem { get; set; }
+
+        public ContentTypeEnum Type { get; set; }
+
+        public ContentBaseModel()
         {
-            get { return id; }
-            set
-            {
-                id = value;
-                OnPropertyChanged("Id");
-            }
+            LastChangedDate = DateTime.Now;
         }
 
         public string Name
@@ -62,12 +62,12 @@ namespace SampleWPFProject.Models
             }
         }
 
-        public ObservableCollection<ContentBase> Children
+        public ObservableCollection<ContentBaseModel> Children
         {
-            get { return content; }
+            get { return children; }
             set
             {
-                content = value;
+                children = value;
                 OnPropertyChanged("Children");
             }
         }

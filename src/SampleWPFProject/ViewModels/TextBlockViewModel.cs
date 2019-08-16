@@ -1,6 +1,6 @@
-﻿using SampleWPFProject.Models;
+﻿using BLL.Models;
 
-namespace SampleWPFProject.ViewModels
+namespace WPFProject.ViewModels
 {
     public class TextBlockViewModel : NotifyPropertyChanged
     {
@@ -8,7 +8,7 @@ namespace SampleWPFProject.ViewModels
 
         private string description;
 
-        public ContentBase EditableItem { get; set; }
+        public ContentBaseModel EditableItem { get; set; }
 
         public string Name
         {

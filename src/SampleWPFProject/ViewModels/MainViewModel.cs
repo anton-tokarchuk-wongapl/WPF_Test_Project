@@ -1,16 +1,18 @@
-﻿using System.Windows.Input;
-using SampleWPFProject.Commands;
-using SampleWPFProject.DBContext;
-using SampleWPFProject.Models;
+﻿using System.Collections.Generic;
+using System.Windows.Input;
+using BLL.Services.Interfaces;
+using BLL.Services;
+using BLL.Models;
+using WPFProject.Commands;
 
-namespace SampleWPFProject.ViewModels
+namespace WPFProject.ViewModels
 {
     /// <summary>
     /// Class contains all ViewModels and commands for working with them.
     /// </summary>
-    public class MainViewModel : NotifyPropertyChanged
+    public class MainViewModel
     {
-        private readonly DataBase db;
+        private readonly IContentBaseService contentBaseService;
 
         public TreeViewModel TreeViewModel { get; }
 
@@ -20,12 +22,29 @@ namespace SampleWPFProject.ViewModels
 
         public MainViewModel()
         {
-            db = DataBase.GetInstance();
 
-            TreeViewModel = new TreeViewModel();
-            TreeViewModel.FoldersList = db.FoldersCollection;
-            ListViewModel = new ListViewModel();
-            TextBlockViewModel = new TextBlockViewModel();
+            contentBaseService = new ContentBaseService();
+
+            //TreeViewModel = new TreeViewModel();
+            //ListViewModel = new ListViewModel();
+            //TextBlockViewModel = new TextBlockViewModel();
+
+            Init();
+        }
+
+        private void Init()
+        {
+            var folder = new ContentFolderModel { Name = "ParentFolder", Description = "DescriptionForParentFolder" };
+            var file1 = new ContentFileModel { Name = "ChildFile1", Description = "DescriptionForChildFile1", ParentContentItem = folder };
+            var file2 = new ContentFileModel { Name = "ChildFile2", Description = "DescriptionForChildFile2", ParentContentItem = folder };
+            var file3 = new ContentFileModel { Name = "ChildFile3", Description = "DescriptionForChildFile3", ParentContentItem = folder };
+            var file4 = new ContentFileModel { Name = "ChildFile4", Description = "DescriptionForChildFile4", ParentContentItem = folder };
+
+            var list = new List<ContentBaseModel> { folder, file1, file2, file3, file4 };
+            contentBaseService.CreateRange(list);
+            contentBaseService.Save();
+            //repository.CreateRange(list);
+            //repository.Save();
         }
 
         public ICommand SaveItem
@@ -43,7 +62,7 @@ namespace SampleWPFProject.ViewModels
                         editableItem.Name = name;
                         editableItem.Description = description;
 
-                        db.EditContent(editableItem);
+                      //  db.EditContent(editableItem);
 
                         TextBlockViewModel.Name = string.Empty;
                         TextBlockViewModel.Description = string.Empty;
