@@ -39,7 +39,7 @@
                 <behaviours:BindableSelectedItemBehavior SelectedItem="{Binding ListViewModel.SelectedFolder, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </e:Interaction.Behaviors>
             <TreeView.Resources>
-                <HierarchicalDataTemplate DataType="{x:Type models:ContentFolderModel}" ItemsSource="{Binding Path=Children, UpdateSourceTrigger=PropertyChanged}">
+                <HierarchicalDataTemplate DataType="{x:Type models:ContentBaseModel}" ItemsSource="{Binding Path=Children, UpdateSourceTrigger=PropertyChanged}">
                     <TextBlock Text="{Binding Path=Name}" />
                 </HierarchicalDataTemplate>
             </TreeView.Resources>

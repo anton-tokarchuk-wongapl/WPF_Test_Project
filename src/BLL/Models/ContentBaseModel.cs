@@ -1,10 +1,9 @@
-﻿using DAL.Entities.Enums;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 
 namespace BLL.Models
 {
-    public class ContentBaseModel : NotifyPropertyChanged
+    public abstract class ContentBaseModel : NotifyPropertyChanged
     {
         protected string name;
 
@@ -21,8 +20,6 @@ namespace BLL.Models
         public int? ParentContentItemId { get; set; }
 
         public ContentBaseModel ParentContentItem { get; set; }
-
-        public ContentTypeEnum Type { get; set; }
 
         public ContentBaseModel()
         {

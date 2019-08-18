@@ -27,6 +27,12 @@ namespace BLL.Services
             configuration = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<ContentBaseEntity, ContentBaseModel>()
+                   .Include<ContentFileEntity, ContentFileModel>()
+                   .Include<ContentFolderEntity, ContentFolderModel>()
+                   .ReverseMap();
+                cfg.CreateMap<ContentFileEntity, ContentFileModel>()
+                   .ReverseMap();
+                cfg.CreateMap<ContentFolderEntity, ContentFolderModel>()
                    .ReverseMap();
             });
 
@@ -51,18 +57,7 @@ namespace BLL.Services
         public void Update(ContentBaseModel item)
             => repository.Update(mapper.Map<ContentBaseEntity>(item));
 
-        //private ObservableCollection<ContentBaseModel> TransferObject(IEnumerable<ContentBaseEntity> entities)
-        //{
-        //    var newCollection = entities.Select(x => new ContentBaseModel()
-        //    {
-        //        Name = x.Name,
-        //        Description = x.Description,
-        //        Children = mapper.Map<ContentBaseEntity[], ObservableCollection<ContentBaseModel>>(entities.ToArray()),
-        //        LastChangedDate = x.LastChangedDate,
-        //        ParentContentItem = mapper.Map<ContentBaseModel>(x.ParentContentItem)
-        //    });
-
-        //    return new ObservableCollection<ContentBaseModel>(newCollection);
-        //}
+        public void Remove(ContentBaseModel item)
+            => repository.Remove(mapper.Map<ContentBaseEntity>(item));
     }
 }

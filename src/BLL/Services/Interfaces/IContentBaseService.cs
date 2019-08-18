@@ -13,8 +13,10 @@ namespace BLL.Services.Interfaces
 
         IEnumerable<ContentBaseModel> GetContentItemsList();
 
-        void Save();
-
         void Update(ContentBaseModel item);
+
+        void Remove(ContentBaseModel item);
+
+        void Save();
     }
 }

@@ -16,6 +16,8 @@ namespace DAL.Repositories.Interfaces
 
         void Update(ContentBaseEntity item);
 
+        void Remove(ContentBaseEntity item);
+
         void Save();
     }
 }

@@ -1,9 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System.Data.Entity;
+using System.Linq;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 using BLL.Services.Interfaces;
 using BLL.Services;
 using BLL.Models;
 using WPFProject.Commands;
+using System.Collections.Generic;
+using System;
 
 namespace WPFProject.ViewModels
 {
@@ -22,29 +26,13 @@ namespace WPFProject.ViewModels
 
         public MainViewModel()
         {
-
             contentBaseService = new ContentBaseService();
 
-            //TreeViewModel = new TreeViewModel();
-            //ListViewModel = new ListViewModel();
-            //TextBlockViewModel = new TextBlockViewModel();
-
-            Init();
-        }
-
-        private void Init()
-        {
-            var folder = new ContentFolderModel { Name = "ParentFolder", Description = "DescriptionForParentFolder" };
-            var file1 = new ContentFileModel { Name = "ChildFile1", Description = "DescriptionForChildFile1", ParentContentItem = folder };
-            var file2 = new ContentFileModel { Name = "ChildFile2", Description = "DescriptionForChildFile2", ParentContentItem = folder };
-            var file3 = new ContentFileModel { Name = "ChildFile3", Description = "DescriptionForChildFile3", ParentContentItem = folder };
-            var file4 = new ContentFileModel { Name = "ChildFile4", Description = "DescriptionForChildFile4", ParentContentItem = folder };
-
-            var list = new List<ContentBaseModel> { folder, file1, file2, file3, file4 };
-            contentBaseService.CreateRange(list);
-            contentBaseService.Save();
-            //repository.CreateRange(list);
-            //repository.Save();
+            TreeViewModel = new TreeViewModel();
+            TreeViewModel.FoldersList = GetFoldersTree();
+           
+            ListViewModel = new ListViewModel(contentBaseService);
+            TextBlockViewModel = new TextBlockViewModel();
         }
 
         public ICommand SaveItem
@@ -62,10 +50,12 @@ namespace WPFProject.ViewModels
                         editableItem.Name = name;
                         editableItem.Description = description;
 
-                      //  db.EditContent(editableItem);
+                        contentBaseService.Update(editableItem);
 
                         TextBlockViewModel.Name = string.Empty;
                         TextBlockViewModel.Description = string.Empty;
+
+                        TreeViewModel.FoldersList = GetFoldersTree();
                     }
                 });
             }
@@ -88,6 +78,28 @@ namespace WPFProject.ViewModels
                     }
                 });
             }
+        }
+
+        private ObservableCollection<ContentBaseModel> GetFoldersTree()
+        {
+            var collection = contentBaseService.GetContentItemsList()
+                                               .Where(x => x.GetType() == typeof(ContentFolderModel) && x.ParentContentItem == null)
+                                               .Select(i=> 
+                                               {
+                                                   i.Children = new ObservableCollection<ContentBaseModel>(Flatten(i, x => x.Children.Where(y => y.GetType() == typeof(ContentFolderModel))));
+                                                   return i;
+                                               });
+
+            return new ObservableCollection<ContentBaseModel>(collection);
+        }
+
+        public IEnumerable<ContentBaseModel> Flatten(ContentBaseModel source, Func<ContentBaseModel, IEnumerable<ContentBaseModel>> selector)
+        {
+            return selector(source).Select(c =>
+            {
+                c.Children = new ObservableCollection<ContentBaseModel>(Flatten(c, selector));
+                return c;
+            });
         }
     }
 }

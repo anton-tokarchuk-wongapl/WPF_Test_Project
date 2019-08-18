@@ -1,25 +1,26 @@
-﻿using DAL.Entities.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Entities.ContentEntities
 {
     public class ContentBaseEntity
     {
+        [Key]
         public int Id { get; set; }
 
         public string Name { get; set; }
 
         public string Description { get; set; }
 
-        public ContentTypeEnum Type { get; set; }
-
         public DateTime LastChangedDate { get; set; }
 
-        public IEnumerable<ContentBaseEntity> Children { get; set; }
+        public virtual ICollection<ContentBaseEntity> Children { get; set; }
 
+        [ForeignKey("ParentContentItem")]
         public int? ParentContentItemId { get; set; }
 
-        public ContentBaseEntity ParentContentItem { get; set; }
+        public virtual ContentBaseEntity ParentContentItem { get; set; }
     }
 }

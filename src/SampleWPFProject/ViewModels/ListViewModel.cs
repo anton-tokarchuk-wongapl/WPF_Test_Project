@@ -1,13 +1,12 @@
 ﻿using System.Collections.ObjectModel;
 using BLL.Models;
+using BLL.Services.Interfaces;
 
 namespace WPFProject.ViewModels
 {
     public class ListViewModel : NotifyPropertyChanged
     {
-        //private readonly string connection = @"C:\Users\atokar\Documents\WPF_Test_Project\localdb\localdb.sdf";
-
-        //private readonly IRepository repository;
+        private readonly IContentBaseService contentBaseService;
 
         private ContentFolderModel selectedFolder;
 
@@ -15,9 +14,9 @@ namespace WPFProject.ViewModels
 
         private ContentBaseModel selectedItem;
 
-        public ListViewModel()
+        public ListViewModel(IContentBaseService contentBaseService)
         {
-            //repository = new ContentBaseRepository(connection);
+            this.contentBaseService = contentBaseService;
         }
 
         public ContentBaseModel SelectedItem
@@ -49,7 +48,8 @@ namespace WPFProject.ViewModels
 
                 if (selectedFolder != null)
                 {
-                    //ContentList = db.GetContentByFolder(selectedFolder);
+                    var item = contentBaseService.GetContentItemById(selectedFolder.Id);
+                    ContentList = new ObservableCollection<ContentBaseModel>(item.Children);
                 }
 
                 OnPropertyChanged("SelectedFolder");

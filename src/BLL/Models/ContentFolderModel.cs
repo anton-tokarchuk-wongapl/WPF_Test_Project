@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using DAL.Entities.Enums;
 
 namespace BLL.Models
 {
@@ -8,7 +7,6 @@ namespace BLL.Models
         public ContentFolderModel()
         {
             Children = new ObservableCollection<ContentBaseModel>();
-            Type = ContentTypeEnum.Folder;
         }
     }
 }
