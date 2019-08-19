@@ -19,9 +19,6 @@ namespace DAL.Repositories
             db.Configuration.LazyLoadingEnabled = false;
         }
 
-        public ContentBaseEntity GetContentItemById(int id)
-            => db.Content.Find(id);
-
         public void Create(ContentBaseEntity item)
         {
             db.Content.Add(item);
@@ -33,6 +30,9 @@ namespace DAL.Repositories
             db.Content.AddRange(collection);
             db.SaveChanges();
         }
+
+        public ContentBaseEntity GetContentItemById(int id)
+            => db.Content.Find(id);
 
         public IEnumerable<ContentBaseEntity> GetContentItemsList()
             => db.Content
@@ -49,6 +49,9 @@ namespace DAL.Repositories
 
             db.SaveChanges();
         }
+
+        public void Remove(ContentBaseEntity item)
+            => db.Content.Remove(db.Content.Find(item.Id));
 
         public void Save()
             => db.SaveChanges();
@@ -70,8 +73,5 @@ namespace DAL.Repositories
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-
-        public void Remove(ContentBaseEntity item)
-            => db.Content.Remove(db.Content.Find(item.Id));
     }
 }

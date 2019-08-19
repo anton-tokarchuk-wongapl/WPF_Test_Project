@@ -39,25 +39,25 @@ namespace BLL.Services
             mapper = configuration.CreateMapper();
         }
 
-        public ContentBaseModel GetContentItemById(int id)
-            => mapper.Map<ContentBaseModel>(repository.GetContentItemById(id));
-
         public void Create(ContentBaseModel item)
             => repository.Create(mapper.Map<ContentBaseEntity>(item));
 
         public void CreateRange(IEnumerable<ContentBaseModel> collection)
             => repository.CreateRange(mapper.Map<ContentBaseModel[], IEnumerable<ContentBaseEntity>>(collection.ToArray()));
 
+        public ContentBaseModel GetContentItemById(int id)
+            => mapper.Map<ContentBaseModel>(repository.GetContentItemById(id));
+
         public IEnumerable<ContentBaseModel> GetContentItemsList()
             => mapper.Map<ContentBaseEntity[], ObservableCollection<ContentBaseModel>>(repository.GetContentItemsList().ToArray());
-
-        public void Save()
-            => repository.Save();
 
         public void Update(ContentBaseModel item)
             => repository.Update(mapper.Map<ContentBaseEntity>(item));
 
         public void Remove(ContentBaseModel item)
             => repository.Remove(mapper.Map<ContentBaseEntity>(item));
+
+        public void Save()
+            => repository.Save();
     }
 }

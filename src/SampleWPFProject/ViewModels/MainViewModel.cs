@@ -93,7 +93,7 @@ namespace WPFProject.ViewModels
             return new ObservableCollection<ContentBaseModel>(collection);
         }
 
-        public IEnumerable<ContentBaseModel> Flatten(ContentBaseModel source, Func<ContentBaseModel, IEnumerable<ContentBaseModel>> selector)
+        private IEnumerable<ContentBaseModel> Flatten(ContentBaseModel source, Func<ContentBaseModel, IEnumerable<ContentBaseModel>> selector)
         {
             return selector(source).Select(c =>
             {

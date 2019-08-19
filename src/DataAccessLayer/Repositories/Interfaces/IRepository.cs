@@ -6,13 +6,13 @@ namespace DAL.Repositories.Interfaces
 {
     public interface IRepository : IDisposable
     {
-        IEnumerable<ContentBaseEntity> GetContentItemsList();
-
-        ContentBaseEntity GetContentItemById(int id);
-
         void Create(ContentBaseEntity item);
 
         void CreateRange(IEnumerable<ContentBaseEntity> collection);
+
+        IEnumerable<ContentBaseEntity> GetContentItemsList();
+
+        ContentBaseEntity GetContentItemById(int id);
 
         void Update(ContentBaseEntity item);
 
