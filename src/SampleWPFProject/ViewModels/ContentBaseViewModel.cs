@@ -1,5 +1,5 @@
-﻿using BLC.Models.ContentModels;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
+using BLC.Models.ContentModels;
 using WPFProject.Helpers.Factories;
 using WPFProject.Helpers.NotifyPropertyChanged;
 
@@ -15,15 +15,14 @@ namespace WPFProject.ViewModels
 
         public ContentBaseModel Model { get; protected set; }
 
-        public ContentBaseViewModel(ContentBaseModel Model)
+        public ContentBaseViewModel(ContentBaseModel Model, ContentBaseViewModel ParentItem = null)
         {
+            this.ParentItem = ParentItem;
             this.Model = Model;
             viewModelFactory = new ContentBaseViewModelFactory();
 
-            if (this.Model.ParentContentItemId != null)
-            {
-                ParentItem = viewModelFactory.GetViewModel(this.Model.ParentContentItem);
-            }
+            var list = viewModelFactory.GetViewModels(this.Model.Children, this);
+            children = new ObservableCollection<ContentBaseViewModel>(list);
         }
 
         public int Id

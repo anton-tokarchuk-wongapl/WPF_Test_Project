@@ -45,7 +45,8 @@ namespace WPFProject.ViewModels
 
         public void CreateFoldersList()
         {
-            var collection = contentBaseService.GetFoldersTree().Select(i => viewModelFactory.GetViewModel(i));
+            var folders = contentBaseService.GetFoldersTree();
+            var collection = viewModelFactory.GetViewModels(folders);
             foldersList = new ObservableCollection<ContentBaseViewModel>(collection);
         }
     }

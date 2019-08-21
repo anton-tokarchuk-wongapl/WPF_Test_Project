@@ -54,7 +54,7 @@ namespace WPFProject.ViewModels
                 if (selectedFolder != null)
                 {
                     var item = contentBaseService.GetContentItemById(selectedFolder.Id);
-                    var list = item.Children.Select(i => viewModelFactory.GetViewModel(i));
+                    var list = viewModelFactory.GetViewModels(item.Children, selectedFolder);
                     ContentList = new ObservableCollection<ContentBaseViewModel>(list);
                 }
 

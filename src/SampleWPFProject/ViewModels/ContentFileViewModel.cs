@@ -5,12 +5,9 @@ namespace WPFProject.ViewModels
 {
     public class ContentFileViewModel : ContentBaseViewModel
     {
-        public ContentFileViewModel(ContentBaseModel Model) : base(Model)
+        public ContentFileViewModel(ContentBaseModel Model, ContentBaseViewModel parent) : base(Model, parent)
         {
-            if (this.Model.ParentContentItemId != null)
-            {
-                ParentItem = viewModelFactory.GetViewModel(this.Model.ParentContentItem);
-            }
+
         }
     }
 }
