@@ -55,11 +55,9 @@ namespace WPFProject.ViewModels
 
         public ObservableCollection<ContentBaseViewModel> Children
         {
-            get { return children; }
-            set
+            get
             {
-                children = value;
-                OnPropertyChanged("Children");
+                return children;
             }
         }
     }

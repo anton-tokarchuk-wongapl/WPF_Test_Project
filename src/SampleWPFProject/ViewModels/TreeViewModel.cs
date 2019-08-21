@@ -1,6 +1,5 @@
 ﻿using BLC.Interfaces;
 using System.Collections.ObjectModel;
-using System.Linq;
 using WPFProject.Helpers.Factories;
 using WPFProject.Helpers.NotifyPropertyChanged;
 
@@ -47,6 +46,7 @@ namespace WPFProject.ViewModels
         {
             var folders = contentBaseService.GetFoldersTree();
             var collection = viewModelFactory.GetViewModels(folders);
+
             foldersList = new ObservableCollection<ContentBaseViewModel>(collection);
         }
     }
