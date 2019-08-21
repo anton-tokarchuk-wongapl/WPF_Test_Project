@@ -1,6 +1,6 @@
 ﻿namespace DTO.DTOs.ContentBaseDTOs
 {
-    public class ContentFileDTO : ContentBaseDTO
+    public class ContentFolderDTO : ContentBaseDTO
     {
     }
 }

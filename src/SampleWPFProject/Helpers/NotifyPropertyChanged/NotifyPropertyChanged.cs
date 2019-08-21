@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace BLL.Models
+namespace WPFProject.Helpers.NotifyPropertyChanged
 {
     public abstract class NotifyPropertyChanged : INotifyPropertyChanged
     {

@@ -1,16 +1,28 @@
-﻿using System.Collections.ObjectModel;
+﻿using BLC.Interfaces;
+using System.Collections.ObjectModel;
 using System.Linq;
-using BLL.Models;
+using WPFProject.Helpers.Factories;
+using WPFProject.Helpers.NotifyPropertyChanged;
 
 namespace WPFProject.ViewModels
 {
     public class TreeViewModel : NotifyPropertyChanged
     {
-        private ObservableCollection<ContentBaseModel> foldersList { get; set; }
+        private readonly IContentBaseService contentBaseService;
 
-        private ContentFolderModel selectedFolder;
+        private readonly ContentBaseViewModelFactory viewModelFactory;
 
-        public ContentFolderModel SelectedFolder
+        private ObservableCollection<ContentBaseViewModel> foldersList { get; set; }
+
+        private ContentFolderViewModel selectedFolder;
+
+        public TreeViewModel(IContentBaseService contentBaseService)
+        {
+            this.contentBaseService = contentBaseService;
+            viewModelFactory = new ContentBaseViewModelFactory();
+        }
+
+        public ContentFolderViewModel SelectedFolder
         {
             get { return selectedFolder; }
             set
@@ -20,7 +32,7 @@ namespace WPFProject.ViewModels
             }
         }
 
-        public ObservableCollection<ContentBaseModel> FoldersList
+        public ObservableCollection<ContentBaseViewModel> FoldersList
         {
             get { return foldersList; }
             set
@@ -29,6 +41,12 @@ namespace WPFProject.ViewModels
                 
                 OnPropertyChanged("FoldersList");
             }
+        }
+
+        public void CreateFoldersList()
+        {
+            var collection = contentBaseService.GetFoldersTree().Select(i => viewModelFactory.GetViewModel(i));
+            foldersList = new ObservableCollection<ContentBaseViewModel>(collection);
         }
     }
 }

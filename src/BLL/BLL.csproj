@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BLC\BLC.csproj" />
     <ProjectReference Include="..\DataAccessLayer\DAL.csproj" />
   </ItemGroup>
 

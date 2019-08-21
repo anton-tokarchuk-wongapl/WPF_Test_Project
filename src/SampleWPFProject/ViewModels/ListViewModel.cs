@@ -1,6 +1,8 @@
-﻿using System.Collections.ObjectModel;
-using BLL.Models;
-using BLL.Services.Interfaces;
+﻿using System.Linq;
+using BLC.Interfaces;
+using System.Collections.ObjectModel;
+using WPFProject.Helpers.NotifyPropertyChanged;
+using WPFProject.Helpers.Factories;
 
 namespace WPFProject.ViewModels
 {
@@ -8,18 +10,21 @@ namespace WPFProject.ViewModels
     {
         private readonly IContentBaseService contentBaseService;
 
-        private ContentFolderModel selectedFolder;
+        private readonly ContentBaseViewModelFactory viewModelFactory;
 
-        private ObservableCollection<ContentBaseModel> contentList;
+        private ContentFolderViewModel selectedFolder;
 
-        private ContentBaseModel selectedItem;
+        private ObservableCollection<ContentBaseViewModel> contentList;
+
+        private ContentBaseViewModel selectedItem;
 
         public ListViewModel(IContentBaseService contentBaseService)
         {
             this.contentBaseService = contentBaseService;
+            viewModelFactory = new ContentBaseViewModelFactory();
         }
 
-        public ContentBaseModel SelectedItem
+        public ContentBaseViewModel SelectedItem
         {
             get { return selectedItem; }
             set
@@ -29,7 +34,7 @@ namespace WPFProject.ViewModels
             }
         }
 
-        public ObservableCollection<ContentBaseModel> ContentList
+        public ObservableCollection<ContentBaseViewModel> ContentList
         {
             get { return contentList; }
             set
@@ -39,7 +44,7 @@ namespace WPFProject.ViewModels
             }
         }
 
-        public ContentFolderModel SelectedFolder
+        public ContentFolderViewModel SelectedFolder
         {
             get { return selectedFolder; }
             set
@@ -49,7 +54,8 @@ namespace WPFProject.ViewModels
                 if (selectedFolder != null)
                 {
                     var item = contentBaseService.GetContentItemById(selectedFolder.Id);
-                    ContentList = new ObservableCollection<ContentBaseModel>(item.Children);
+                    var list = item.Children.Select(i => viewModelFactory.GetViewModel(i));
+                    ContentList = new ObservableCollection<ContentBaseViewModel>(list);
                 }
 
                 OnPropertyChanged("SelectedFolder");

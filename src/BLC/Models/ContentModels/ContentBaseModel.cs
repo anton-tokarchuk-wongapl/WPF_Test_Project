@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DTO.DTOs.ContentBaseDTOs
+namespace BLC.Models.ContentModels
 {
-    public abstract class ContentBaseDTO
+    public abstract class ContentBaseModel
     {
         public int Id { get; set; }
 
@@ -13,10 +13,10 @@ namespace DTO.DTOs.ContentBaseDTOs
 
         public DateTime LastChangedDate { get; set; }
 
-        public ICollection<ContentBaseDTO> Children { get; set; }
+        public virtual ICollection<ContentBaseModel> Children { get; set; }
 
         public int? ParentContentItemId { get; set; }
 
-        public ContentBaseDTO ParentContentItem { get; set; }
+        public ContentBaseModel ParentContentItem { get; set; }
     }
 }

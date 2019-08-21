@@ -1,13 +1,7 @@
-﻿using System.Data.Entity;
-using System.Linq;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
-using BLL.Services.Interfaces;
+﻿using System.Windows.Input;
 using BLL.Services;
-using BLL.Models;
-using WPFProject.Commands;
-using System.Collections.Generic;
-using System;
+using BLC.Interfaces;
+using WPFProject.Helpers.Commands;
 
 namespace WPFProject.ViewModels
 {
@@ -28,8 +22,8 @@ namespace WPFProject.ViewModels
         {
             contentBaseService = new ContentBaseService();
 
-            TreeViewModel = new TreeViewModel();
-            TreeViewModel.FoldersList = GetFoldersTree();
+            TreeViewModel = new TreeViewModel(contentBaseService);
+            TreeViewModel.CreateFoldersList();
            
             ListViewModel = new ListViewModel(contentBaseService);
             TextBlockViewModel = new TextBlockViewModel();
@@ -50,12 +44,13 @@ namespace WPFProject.ViewModels
                         editableItem.Name = name;
                         editableItem.Description = description;
 
-                        contentBaseService.Update(editableItem);
+                        var model = editableItem.Model;
+                        contentBaseService.Update(model);
 
                         TextBlockViewModel.Name = string.Empty;
                         TextBlockViewModel.Description = string.Empty;
 
-                        TreeViewModel.FoldersList = GetFoldersTree();
+                        TreeViewModel.CreateFoldersList();
                     }
                 });
             }
@@ -78,28 +73,6 @@ namespace WPFProject.ViewModels
                     }
                 });
             }
-        }
-
-        private ObservableCollection<ContentBaseModel> GetFoldersTree()
-        {
-            var collection = contentBaseService.GetContentItemsList()
-                                               .Where(x => x.GetType() == typeof(ContentFolderModel) && x.ParentContentItem == null)
-                                               .Select(i=> 
-                                               {
-                                                   i.Children = new ObservableCollection<ContentBaseModel>(Flatten(i, x => x.Children.Where(y => y.GetType() == typeof(ContentFolderModel))));
-                                                   return i;
-                                               });
-
-            return new ObservableCollection<ContentBaseModel>(collection);
-        }
-
-        private IEnumerable<ContentBaseModel> Flatten(ContentBaseModel source, Func<ContentBaseModel, IEnumerable<ContentBaseModel>> selector)
-        {
-            return selector(source).Select(c =>
-            {
-                c.Children = new ObservableCollection<ContentBaseModel>(Flatten(c, selector));
-                return c;
-            });
         }
     }
 }

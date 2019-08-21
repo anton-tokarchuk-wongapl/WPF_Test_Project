@@ -1,4 +1,4 @@
-﻿using BLL.Models;
+﻿using WPFProject.Helpers.NotifyPropertyChanged;
 
 namespace WPFProject.ViewModels
 {
@@ -8,7 +8,7 @@ namespace WPFProject.ViewModels
 
         private string description;
 
-        public ContentBaseModel EditableItem { get; set; }
+        public ContentBaseViewModel EditableItem { get; set; }
 
         public string Name
         {

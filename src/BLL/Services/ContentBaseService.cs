@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
-using DAL.Entities.ContentEntities;
+using BLC.Interfaces;
+using BLC.Models.ContentModels;
 using DAL.Repositories;
 using DAL.Repositories.Interfaces;
-using BLL.Services.Interfaces;
-using BLL.Models;
+using DTO.DTOs.ContentBaseDTOs;
 
 namespace BLL.Services
 {
@@ -26,38 +26,49 @@ namespace BLL.Services
 
             configuration = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<ContentBaseEntity, ContentBaseModel>()
-                   .Include<ContentFileEntity, ContentFileModel>()
-                   .Include<ContentFolderEntity, ContentFolderModel>()
+                cfg.CreateMap<ContentBaseDTO, ContentBaseModel>()
+                   .Include<ContentFileDTO, ContentFileModel>()
+                   .Include<ContentFolderDTO, ContentFolderModel>()
                    .ReverseMap();
-                cfg.CreateMap<ContentFileEntity, ContentFileModel>()
+                cfg.CreateMap<ContentFileDTO, ContentFileModel>()
                    .ReverseMap();
-                cfg.CreateMap<ContentFolderEntity, ContentFolderModel>()
+                cfg.CreateMap<ContentFolderDTO, ContentFolderModel>()
                    .ReverseMap();
             });
 
             mapper = configuration.CreateMapper();
         }
 
-        public void Create(ContentBaseModel item)
-            => repository.Create(mapper.Map<ContentBaseEntity>(item));
-
-        public void CreateRange(IEnumerable<ContentBaseModel> collection)
-            => repository.CreateRange(mapper.Map<ContentBaseModel[], IEnumerable<ContentBaseEntity>>(collection.ToArray()));
-
         public ContentBaseModel GetContentItemById(int id)
             => mapper.Map<ContentBaseModel>(repository.GetContentItemById(id));
 
-        public IEnumerable<ContentBaseModel> GetContentItemsList()
-            => mapper.Map<ContentBaseEntity[], ObservableCollection<ContentBaseModel>>(repository.GetContentItemsList().ToArray());
+        public ICollection<ContentBaseModel> GetFoldersTree()
+        {
+            var collection = GetContentItemsList();
+
+            var list = collection.Where(x => x.GetType() == typeof(ContentFolderModel) && x.ParentContentItem == null)
+                                              .Select(i =>
+                                              {
+                                                  i.Children = new List<ContentBaseModel>(Flatten(i, x => x.Children.Where(y => y.GetType() == typeof(ContentFolderModel))));
+                                                  return i;
+                                              });
+
+            return new List<ContentBaseModel>(list);
+        }
 
         public void Update(ContentBaseModel item)
-            => repository.Update(mapper.Map<ContentBaseEntity>(item));
+            => repository.Update(mapper.Map<ContentBaseDTO>(item));
 
-        public void Remove(ContentBaseModel item)
-            => repository.Remove(mapper.Map<ContentBaseEntity>(item));
+        private ICollection<ContentBaseModel> GetContentItemsList()
+            => mapper.Map<ContentBaseDTO[], ICollection<ContentBaseModel>>(repository.GetContentItemsList().ToArray());
 
-        public void Save()
-            => repository.Save();
+        private IEnumerable<ContentBaseModel> Flatten(ContentBaseModel source, Func<ContentBaseModel, IEnumerable<ContentBaseModel>> selector)
+        {
+            return selector(source).Select(c =>
+            {
+                c.Children = new List<ContentBaseModel>(Flatten(c, selector));
+                return c;
+            });
+        }
     }
 }

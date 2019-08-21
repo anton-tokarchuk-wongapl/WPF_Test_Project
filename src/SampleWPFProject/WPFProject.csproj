@@ -99,8 +99,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Commands\DelegateCommand.cs" />
-    <Compile Include="Helpers\BindableSelectedItemBehavior.cs" />
+    <Compile Include="Helpers\Commands\DelegateCommand.cs" />
+    <Compile Include="Helpers\Behaviours\BindableSelectedItemBehavior.cs" />
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -109,6 +109,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Helpers\Factories\ContentBaseViewModelFactory.cs" />
+    <Compile Include="Helpers\NotifyPropertyChanged\NotifyPropertyChanged.cs" />
+    <Compile Include="ViewModels\ContentBaseViewModel.cs" />
+    <Compile Include="ViewModels\ContentFileViewModel.cs" />
+    <Compile Include="ViewModels\ContentFolderViewModel.cs" />
     <Compile Include="ViewModels\ListViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\TextBlockViewModel.cs" />
@@ -158,6 +163,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BLC\BLC.csproj">
+      <Project>{960FB77C-4A3F-4CB8-972F-23E1D4548F30}</Project>
+      <Name>BLC</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BLL\BLL.csproj">
       <Project>{e79560a1-3afc-418d-8c91-06b50a26c33f}</Project>
       <Name>BLL</Name>
