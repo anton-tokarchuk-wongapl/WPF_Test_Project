@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BLC.Models.ContentModels
+namespace BusinessLogicContracts.Models.ContentModels
 {
     public abstract class ContentBaseModel
     {

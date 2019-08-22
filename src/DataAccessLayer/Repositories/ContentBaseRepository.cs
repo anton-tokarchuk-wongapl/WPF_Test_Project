@@ -2,10 +2,10 @@
 using System.Data.Entity;
 using System.Collections.Generic;
 using System.Linq;
-using DAL.Repositories.Interfaces;
-using DAL.Entities.ContentEntities;
+using DataAccessLayer.Repositories.Interfaces;
+using DataAccessLayer.Entities.ContentEntities;
 
-namespace DAL.Repositories
+namespace DataAccessLayer.Repositories
 {
     public class ContentBaseRepository : IRepository
     {

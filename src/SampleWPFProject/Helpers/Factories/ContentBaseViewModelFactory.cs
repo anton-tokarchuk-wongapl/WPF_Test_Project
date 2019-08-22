@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using BLC.Models.ContentModels;
+using BusinessLogicContracts.Models.ContentModels;
 using WPFProject.ViewModels;
 
 namespace WPFProject.Helpers.Factories

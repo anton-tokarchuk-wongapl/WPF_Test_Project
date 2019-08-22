@@ -5,11 +5,11 @@ VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFProject", "SampleWPFProject\WPFProject.csproj", "{69202302-C813-468D-B2D7-133A4D8477CA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DataAccessLayer\DAL.csproj", "{ECDA43DB-FDAB-4E2C-BDF5-B40D862FFED9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{ECDA43DB-FDAB-4E2C-BDF5-B40D862FFED9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL", "BLL\BLL.csproj", "{E79560A1-3AFC-418D-8C91-06B50A26C33F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogicLayer", "BLL\BusinessLogicLayer.csproj", "{E79560A1-3AFC-418D-8C91-06B50A26C33F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLC", "BLC\BLC.csproj", "{960FB77C-4A3F-4CB8-972F-23E1D4548F30}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogicContracts", "BLC\BusinessLogicContracts.csproj", "{960FB77C-4A3F-4CB8-972F-23E1D4548F30}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

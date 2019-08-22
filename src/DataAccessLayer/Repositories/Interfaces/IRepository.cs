@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using DAL.Entities.ContentEntities;
+using DataAccessLayer.Entities.ContentEntities;
 
-namespace DAL.Repositories.Interfaces
+namespace DataAccessLayer.Repositories.Interfaces
 {
     public interface IRepository : IDisposable
     {

@@ -1,4 +1,4 @@
-﻿using BLC.Models.ContentModels;
+﻿using BusinessLogicContracts.Models.ContentModels;
 
 namespace WPFProject.ViewModels
 {

@@ -1,5 +1,5 @@
 ﻿using System.Collections.ObjectModel;
-using BLC.Models.ContentModels;
+using BusinessLogicContracts.Models.ContentModels;
 using WPFProject.Helpers.Factories;
 using WPFProject.Helpers.NotifyPropertyChanged;
 

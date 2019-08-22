@@ -12,8 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BLC\BLC.csproj" />
-    <ProjectReference Include="..\DataAccessLayer\DAL.csproj" />
+    <ProjectReference Include="..\BLC\BusinessLogicContracts.csproj" />
+    <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj" />
   </ItemGroup>
 
 </Project>

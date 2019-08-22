@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
-using BLL.Services;
-using BLC.Interfaces;
+using BusinessLogicLayer.Services;
+using BusinessLogicContracts.Interfaces;
 using WPFProject.Helpers.Commands;
 
 namespace WPFProject.ViewModels

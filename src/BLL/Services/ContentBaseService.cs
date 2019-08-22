@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
-using BLC.Interfaces;
-using BLC.Models.ContentModels;
-using DAL.Entities.ContentEntities;
-using DAL.Repositories;
-using DAL.Repositories.Interfaces;
+using BusinessLogicContracts.Interfaces;
+using BusinessLogicContracts.Models.ContentModels;
+using DataAccessLayer.Entities.ContentEntities;
+using DataAccessLayer.Repositories;
+using DataAccessLayer.Repositories.Interfaces;
 
-namespace BLL.Services
+namespace BusinessLogicLayer.Services
 {
     public class ContentBaseService : IContentBaseService
     {

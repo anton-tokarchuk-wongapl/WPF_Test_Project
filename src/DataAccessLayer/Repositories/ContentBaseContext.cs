@@ -1,7 +1,7 @@
 ﻿using System.Data.Entity;
-using DAL.Entities.ContentEntities;
+using DataAccessLayer.Entities.ContentEntities;
 
-namespace DAL.Repositories
+namespace DataAccessLayer.Repositories
 {
     public class ContentBaseContext : DbContext
     {

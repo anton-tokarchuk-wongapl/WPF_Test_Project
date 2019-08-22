@@ -163,13 +163,13 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BLC\BLC.csproj">
+    <ProjectReference Include="..\BLC\BusinessLogicContracts.csproj">
       <Project>{960FB77C-4A3F-4CB8-972F-23E1D4548F30}</Project>
-      <Name>BLC</Name>
+      <Name>BusinessLogicContracts</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BLL\BLL.csproj">
+    <ProjectReference Include="..\BLL\BusinessLogicLayer.csproj">
       <Project>{e79560a1-3afc-418d-8c91-06b50a26c33f}</Project>
-      <Name>BLL</Name>
+      <Name>BusinessLogicLayer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

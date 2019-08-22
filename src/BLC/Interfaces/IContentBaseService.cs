@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using BLC.Models.ContentModels;
+using BusinessLogicContracts.Models.ContentModels;
 
-namespace BLC.Interfaces
+namespace BusinessLogicContracts.Interfaces
 {
     public interface IContentBaseService
     {

@@ -1,4 +1,4 @@
-﻿using BLC.Interfaces;
+﻿using BusinessLogicContracts.Interfaces;
 using System.Collections.ObjectModel;
 using WPFProject.Helpers.Factories;
 using WPFProject.Helpers.NotifyPropertyChanged;

@@ -1,4 +1,4 @@
-﻿namespace DAL.Entities.ContentEntities
+﻿namespace DataAccessLayer.Entities.ContentEntities
 {
     public class ContentFolderEntity : ContentBaseEntity
     {
