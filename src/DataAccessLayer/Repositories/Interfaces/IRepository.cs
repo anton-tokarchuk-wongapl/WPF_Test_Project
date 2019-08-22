@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using DTO.DTOs.ContentBaseDTOs;
+using DAL.Entities.ContentEntities;
 
 namespace DAL.Repositories.Interfaces
 {
     public interface IRepository : IDisposable
     {
-        ICollection<ContentBaseDTO> GetContentItemsList();
+        ICollection<ContentBaseEntity> GetContentItemsList();
 
-        ContentBaseDTO GetContentItemById(int id);
+        ContentBaseEntity GetContentItemById(int id);
 
-        void Update(ContentBaseDTO item);
+        void Update(ContentBaseEntity item);
     }
 }

@@ -1,6 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.ObjectModel;
 using BLC.Interfaces;
-using System.Collections.ObjectModel;
 using WPFProject.Helpers.NotifyPropertyChanged;
 using WPFProject.Helpers.Factories;
 

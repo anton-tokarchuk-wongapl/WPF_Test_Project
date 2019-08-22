@@ -4,9 +4,9 @@ using System.Linq;
 using AutoMapper;
 using BLC.Interfaces;
 using BLC.Models.ContentModels;
+using DAL.Entities.ContentEntities;
 using DAL.Repositories;
 using DAL.Repositories.Interfaces;
-using DTO.DTOs.ContentBaseDTOs;
 
 namespace BLL.Services
 {
@@ -26,13 +26,13 @@ namespace BLL.Services
 
             configuration = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<ContentBaseDTO, ContentBaseModel>()
-                   .Include<ContentFileDTO, ContentFileModel>()
-                   .Include<ContentFolderDTO, ContentFolderModel>()
+                cfg.CreateMap<ContentBaseEntity, ContentBaseModel>()
+                   .Include<ContentBaseEntity, ContentFileModel>()
+                   .Include<ContentBaseEntity, ContentFolderModel>()
                    .ReverseMap();
-                cfg.CreateMap<ContentFileDTO, ContentFileModel>()
+                cfg.CreateMap<ContentBaseEntity, ContentFileModel>()
                    .ReverseMap();
-                cfg.CreateMap<ContentFolderDTO, ContentFolderModel>()
+                cfg.CreateMap<ContentBaseEntity, ContentFolderModel>()
                    .ReverseMap();
             });
 
@@ -57,10 +57,10 @@ namespace BLL.Services
         }
 
         public void Update(ContentBaseModel item)
-            => repository.Update(mapper.Map<ContentBaseDTO>(item));
+            => repository.Update(mapper.Map<ContentBaseEntity>(item));
 
         private ICollection<ContentBaseModel> GetContentItemsList()
-            => mapper.Map<ContentBaseDTO[], ICollection<ContentBaseModel>>(repository.GetContentItemsList().ToArray());
+            => mapper.Map<ContentBaseEntity[], ICollection<ContentBaseModel>>(repository.GetContentItemsList().ToArray());
 
         private IEnumerable<ContentBaseModel> Flatten(ContentBaseModel source, Func<ContentBaseModel, IEnumerable<ContentBaseModel>> selector)
         {
