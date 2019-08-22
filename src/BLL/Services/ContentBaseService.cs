@@ -27,12 +27,12 @@ namespace BusinessLogicLayer.Services
             configuration = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<ContentBaseEntity, ContentBaseModel>()
-                   .Include<ContentBaseEntity, ContentFileModel>()
-                   .Include<ContentBaseEntity, ContentFolderModel>()
+                   .Include<ContentFileEntity, ContentFileModel>()
+                   .Include<ContentFolderEntity, ContentFolderModel>()
                    .ReverseMap();
-                cfg.CreateMap<ContentBaseEntity, ContentFileModel>()
+                cfg.CreateMap<ContentFileEntity, ContentFileModel>()
                    .ReverseMap();
-                cfg.CreateMap<ContentBaseEntity, ContentFolderModel>()
+                cfg.CreateMap<ContentFolderEntity, ContentFolderModel>()
                    .ReverseMap();
             });
 

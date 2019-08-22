@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataAccessLayer.Entities.ContentEntities
 {
-    public abstract class ContentBaseEntity
+    public class ContentBaseEntity
     {
         [Key]
         public int Id { get; set; }
