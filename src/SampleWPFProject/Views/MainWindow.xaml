@@ -7,31 +7,32 @@
     xmlns:models="clr-namespace:WPFProject.ViewModels"
     Title="MainWindow"
     Width="600"
-    Height="600">
+    Height="615">
     <Window.Resources>
         <Style TargetType="TextBlock">
-            <Setter Property="FontSize" Value="13" />
+            <Setter Property="FontSize" Value="14" />
         </Style>
         <Style TargetType="TextBox">
-            <Setter Property="FontSize" Value="13" />
+            <Setter Property="FontSize" Value="14" />
         </Style>
     </Window.Resources>
     <Grid x:Name="ParentGrid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="474*" />
-            <RowDefinition Height="120*" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="0.2*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
         <TreeView
             x:Name="TreeViewElement"
             Grid.Row="0"
             Grid.Column="0"
-            Width="148"
-            Height="475"
+            Width="135"
+            Height="480"
+            Margin="5,5,5,5"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             ItemsSource="{Binding Path=TreeViewModel.FoldersList}">
@@ -49,6 +50,7 @@
             Name="ItemsListElement"
             Grid.Row="0"
             Grid.Column="1"
+            Margin="5,5,5,5"
             ItemsSource="{Binding Path=ListViewModel.ContentList}"
             SelectedItem="{Binding Path=ListViewModel.SelectedItem}">
             <ListView.View>
@@ -60,27 +62,67 @@
             </ListView.View>
         </ListView>
 
-        <StackPanel
-            Name="StackPanelElement"
+        <Grid
+            x:Name="BottomGrid"
             Grid.Row="1"
             Grid.Column="0"
-            Grid.ColumnSpan="2">
+            Grid.ColumnSpan="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
             <TextBlock
-                Width="150"
-                HorizontalAlignment="Left"
+                Grid.Row="0"
+                Grid.Column="0"
+                Width="135"
+                Margin="5,5,5,5"
+                HorizontalAlignment="Center"
                 Text="Name" />
-            <TextBox Text="{Binding Path=TextBlockViewModel.Name, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBlock Text="Description" />
-            <TextBox Text="{Binding Path=TextBlockViewModel.Description, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="0"
+                Width="135"
+                Margin="5,5,5,5"
+                HorizontalAlignment="Center"
+                Text="Description" />
+            <TextBox
+                Grid.Row="0"
+                Grid.Column="1"
+                Margin="5,5,5,5"
+                Text="{Binding Path=TextBlockViewModel.Name, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBox
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="5,5,5,5"
+                Text="{Binding Path=TextBlockViewModel.Description, UpdateSourceTrigger=PropertyChanged}" />
+
             <Button
                 x:Name="EditItemButton"
+                Grid.Row="2"
+                Grid.Column="1"
+                Width="50"
+                Height="20"
+                Margin="245,0,70,5"
+                HorizontalAlignment="Right"
                 Command="{Binding EditItem}"
-                Content="EditItem" />
+                Content="Edit" />
             <Button
                 x:Name="SaveItemButton"
+                Grid.Row="2"
+                Grid.Column="1"
+                Width="50"
+                Height="20"
+                Margin="0,0,10,5"
+                HorizontalAlignment="Right"
                 Command="{Binding SaveItem}"
-                Content="SaveItem" />
-        </StackPanel>
+                Content="Save" />
+        </Grid>
     </Grid>
 </Window>
 
