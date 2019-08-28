@@ -13,7 +13,7 @@ namespace WPFProject.ViewModels
 
         private readonly ContentBaseViewModelFactory viewModelFactory;
 
-        private ContentFolderViewModel selectedFolder = null;
+        private ContentFolderViewModel selectedFolder;
 
         private ContentBaseViewModel selectedItem;
 
@@ -27,7 +27,7 @@ namespace WPFProject.ViewModels
             _contentList = this
                 .WhenAnyValue(x => x.SelectedFolder)
                 .Where(o => !IsNull(o))
-                .Select(t => GetContent(t.Id))
+                .Select(t => GetContentList(t.Id))
                 .ToProperty(this, x => x.ContentList);
         }
 
@@ -45,7 +45,7 @@ namespace WPFProject.ViewModels
             set => this.RaiseAndSetIfChanged(ref selectedFolder, value);
         }
 
-        private IEnumerable<ContentBaseViewModel> GetContent(int id)
+        private IEnumerable<ContentBaseViewModel> GetContentList(int id)
         {
             var item = contentBaseService.GetContentItemById(id);
             var list = viewModelFactory.GetViewModels(item.Children, selectedFolder);

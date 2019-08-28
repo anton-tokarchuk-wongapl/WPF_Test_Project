@@ -37,7 +37,7 @@
             VerticalAlignment="Top"
             ItemsSource="{Binding Path=TreeViewModel.FoldersList}">
             <e:Interaction.Behaviors>
-                <behaviours:BindableSelectedItemBehavior SelectedItem="{Binding ListViewModel.SelectedFolder, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <behaviours:BindableSelectedItemBehavior SelectedItem="{Binding Path=TreeViewModel.SelectedFolder, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </e:Interaction.Behaviors>
             <TreeView.Resources>
                 <HierarchicalDataTemplate DataType="{x:Type models:ContentBaseViewModel}" ItemsSource="{Binding Path=Children, UpdateSourceTrigger=PropertyChanged}">
@@ -101,24 +101,13 @@
                 Grid.Column="1"
                 Margin="5,5,5,5"
                 Text="{Binding Path=TextBlockViewModel.Description, UpdateSourceTrigger=PropertyChanged}" />
-
-            <Button
-                x:Name="EditItemButton"
-                Grid.Row="2"
-                Grid.Column="1"
-                Width="50"
-                Height="20"
-                Margin="245,0,70,5"
-                HorizontalAlignment="Right"
-                Command="{Binding EditItemCommand}"
-                Content="Edit" />
             <Button
                 x:Name="SaveItemButton"
                 Grid.Row="2"
                 Grid.Column="1"
-                Width="50"
+                Width="60"
                 Height="20"
-                Margin="0,0,10,5"
+                Margin="0,0,20,5"
                 HorizontalAlignment="Right"
                 Command="{Binding SaveItemCommand}"
                 Content="Save" />

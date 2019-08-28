@@ -2,6 +2,8 @@
 using BusinessLogicContracts.Interfaces;
 using ReactiveUI;
 using System.Reactive;
+using System;
+using System.Reactive.Linq;
 
 namespace WPFProject.ViewModels
 {
@@ -28,19 +30,21 @@ namespace WPFProject.ViewModels
             ListViewModel = new ListViewModel(contentBaseService);
             TextBlockViewModel = new TextBlockViewModel();
 
+            this.WhenAnyValue(x => x.TreeViewModel.SelectedFolder)
+                .Subscribe(_ => BindSelectedFolder());
+
+            this.WhenAnyValue(x => x.ListViewModel.SelectedItem)
+                .Subscribe(_ => EditItem());
+
             SaveItemCommand = ReactiveCommand.Create(() =>
             {
                 SaveItem();
-            });
-            EditItemCommand = ReactiveCommand.Create(() =>
-            {
-                EditItem();
             });
         }
 
         public ReactiveCommand<Unit, Unit> SaveItemCommand { get; }
 
-        public ReactiveCommand<Unit, Unit> EditItemCommand { get; }
+        private void BindSelectedFolder() => ListViewModel.SelectedFolder = TreeViewModel.SelectedFolder;
 
         private void SaveItem()
         {
