@@ -1,8 +1,8 @@
-﻿using WPFProject.Helpers.NotifyPropertyChanged;
+﻿using ReactiveUI;
 
 namespace WPFProject.ViewModels
 {
-    public class TextBlockViewModel : NotifyPropertyChanged
+    public class TextBlockViewModel : ReactiveObject
     {
         private string name;
 
@@ -12,22 +12,14 @@ namespace WPFProject.ViewModels
 
         public string Name
         {
-            get { return name; }
-            set
-            {
-                name = value;
-                OnPropertyChanged("Name");
-            }
+            get => name;
+            set => this.RaiseAndSetIfChanged(ref name, value);
         }
 
         public string Description
         {
-            get { return description; }
-            set
-            {
-                description = value;
-                OnPropertyChanged("Description");
-            }
+            get => description;
+            set => this.RaiseAndSetIfChanged(ref description, value);
         }
     }
 }

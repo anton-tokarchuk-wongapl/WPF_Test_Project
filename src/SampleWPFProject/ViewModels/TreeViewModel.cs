@@ -1,17 +1,17 @@
 ﻿using BusinessLogicContracts.Interfaces;
-using System.Collections.ObjectModel;
+using ReactiveUI;
+using System.Collections.Generic;
 using WPFProject.Helpers.Factories;
-using WPFProject.Helpers.NotifyPropertyChanged;
 
 namespace WPFProject.ViewModels
 {
-    public class TreeViewModel : NotifyPropertyChanged
+    public class TreeViewModel : ReactiveObject
     {
         private readonly IContentBaseService contentBaseService;
 
         private readonly ContentBaseViewModelFactory viewModelFactory;
 
-        private ObservableCollection<ContentBaseViewModel> foldersList { get; set; }
+        private IEnumerable<ContentBaseViewModel> foldersList;
 
         private ContentFolderViewModel selectedFolder;
 
@@ -23,23 +23,14 @@ namespace WPFProject.ViewModels
 
         public ContentFolderViewModel SelectedFolder
         {
-            get { return selectedFolder; }
-            set
-            {
-                selectedFolder = value;
-                OnPropertyChanged("SelectedFolder");
-            }
+            get => selectedFolder;
+            set => this.RaiseAndSetIfChanged(ref selectedFolder, value);
         }
 
-        public ObservableCollection<ContentBaseViewModel> FoldersList
+        public IEnumerable<ContentBaseViewModel> FoldersList
         {
-            get { return foldersList; }
-            set
-            {
-                foldersList = value;
-                
-                OnPropertyChanged("FoldersList");
-            }
+            get => foldersList;
+            set => this.RaiseAndSetIfChanged(ref foldersList, value);
         }
 
         public void CreateFoldersList()
@@ -47,7 +38,7 @@ namespace WPFProject.ViewModels
             var folders = contentBaseService.GetFoldersTree();
             var collection = viewModelFactory.GetViewModels(folders);
 
-            foldersList = new ObservableCollection<ContentBaseViewModel>(collection);
+            foldersList = new List<ContentBaseViewModel>(collection);
         }
     }
 }

@@ -1,22 +1,22 @@
-﻿using System.Windows.Input;
-using BusinessLogicLayer.Services;
+﻿using BusinessLogicLayer.Services;
 using BusinessLogicContracts.Interfaces;
-using WPFProject.Helpers.Commands;
+using ReactiveUI;
+using System.Reactive;
 
 namespace WPFProject.ViewModels
 {
     /// <summary>
     /// Class contains all ViewModels and commands for working with them.
     /// </summary>
-    public class MainViewModel
+    public class MainViewModel : ReactiveObject
     {
         private readonly IContentBaseService contentBaseService;
-
-        public TreeViewModel TreeViewModel { get; }
 
         public ListViewModel ListViewModel { get; }
 
         public TextBlockViewModel TextBlockViewModel { get; }
+
+        public TreeViewModel TreeViewModel { get; }
 
         public MainViewModel()
         {
@@ -24,54 +24,55 @@ namespace WPFProject.ViewModels
 
             TreeViewModel = new TreeViewModel(contentBaseService);
             TreeViewModel.CreateFoldersList();
-           
+
             ListViewModel = new ListViewModel(contentBaseService);
             TextBlockViewModel = new TextBlockViewModel();
+
+            SaveItemCommand = ReactiveCommand.Create(() =>
+            {
+                SaveItem();
+            });
+            EditItemCommand = ReactiveCommand.Create(() =>
+            {
+                EditItem();
+            });
         }
 
-        public ICommand SaveItem
+        public ReactiveCommand<Unit, Unit> SaveItemCommand { get; }
+
+        public ReactiveCommand<Unit, Unit> EditItemCommand { get; }
+
+        private void SaveItem()
         {
-            get
+            var name = TextBlockViewModel.Name;
+            var description = TextBlockViewModel.Description;
+            var editableItem = TextBlockViewModel.EditableItem;
+
+            if (!string.Equals(name, editableItem.Name) || !string.Equals(description, editableItem.Description))
             {
-                return new DelegateCommand(obj =>
-                {
-                    var name = TextBlockViewModel.Name;
-                    var description = TextBlockViewModel.Description;
-                    var editableItem = TextBlockViewModel.EditableItem;
+                editableItem.Name = name;
+                editableItem.Description = description;
 
-                    if (!string.Equals(name, editableItem.Name) || !string.Equals(description, editableItem.Description))
-                    {
-                        editableItem.Name = name;
-                        editableItem.Description = description;
+                var model = editableItem.Model;
+                contentBaseService.Update(model);
 
-                        var model = editableItem.Model;
-                        contentBaseService.Update(model);
+                TextBlockViewModel.Name = string.Empty;
+                TextBlockViewModel.Description = string.Empty;
 
-                        TextBlockViewModel.Name = string.Empty;
-                        TextBlockViewModel.Description = string.Empty;
-
-                        TreeViewModel.CreateFoldersList();
-                    }
-                });
+                TreeViewModel.CreateFoldersList();
             }
         }
 
-        public ICommand EditItem
+        private void EditItem()
         {
-            get
+            var content = ListViewModel.SelectedItem;
+
+            if (content != null)
             {
-                return new DelegateCommand(obj =>
-                {
-                    var content = ListViewModel.SelectedItem;
+                TextBlockViewModel.Name = content.Name;
+                TextBlockViewModel.Description = content.Description;
 
-                    if (content != null)
-                    {
-                        TextBlockViewModel.Name = content.Name;
-                        TextBlockViewModel.Description = content.Description;
-
-                        TextBlockViewModel.EditableItem = content;
-                    }
-                });
+                TextBlockViewModel.EditableItem = content;
             }
         }
     }

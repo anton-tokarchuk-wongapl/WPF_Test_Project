@@ -1,64 +1,64 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using BusinessLogicContracts.Models.ContentModels;
+using ReactiveUI;
 using WPFProject.Helpers.Factories;
-using WPFProject.Helpers.NotifyPropertyChanged;
 
 namespace WPFProject.ViewModels
 {
-    public abstract class ContentBaseViewModel : NotifyPropertyChanged
+    public abstract class ContentBaseViewModel : ReactiveObject
     {
         protected readonly ContentBaseViewModelFactory viewModelFactory;
 
-        protected ContentBaseViewModel ParentItem;
+        protected readonly ContentBaseViewModel ParentItem;
 
-        protected ObservableCollection<ContentBaseViewModel> children;
+        protected readonly IEnumerable<ContentBaseViewModel> _children;
 
-        public ContentBaseModel Model { get; protected set; }
+        protected string _name;
+
+        protected string _description;
+
+        protected string _lastChangedDateShort;
 
         public ContentBaseViewModel(ContentBaseModel Model, ContentBaseViewModel ParentItem = null)
         {
             this.ParentItem = ParentItem;
             this.Model = Model;
+            _name = Model.Name;
+            _description = Model.Description;
+            _lastChangedDateShort = Model.LastChangedDate.ToShortDateString();
+
             viewModelFactory = new ContentBaseViewModelFactory();
 
             var list = viewModelFactory.GetViewModels(this.Model.Children, this);
-            children = new ObservableCollection<ContentBaseViewModel>(list);
+            _children = new List<ContentBaseViewModel>(list);
         }
 
-        public int Id
-        {
-            get { return Model.Id; }
-        }
+        public ContentBaseModel Model { get; protected set; }
+
+        public int Id => Model.Id;
 
         public string Name
         {
-            get { return Model.Name; }
+            get => _name;
             set
             {
-                Model.Name = value;
-                OnPropertyChanged("Name");
+                this.RaiseAndSetIfChanged(ref _name, value);
+                Model.Name = _name;
             }
         }
 
         public string Description
         {
-            get { return Model.Description; }
+            get => _description;
             set
             {
-                Model.Description = value;
-                OnPropertyChanged("Description");
+                this.RaiseAndSetIfChanged(ref _description, value);
+                Model.Description = _description;
             }
         }
 
-        public string LastChangedDateShort
-            => Model.LastChangedDate.ToShortDateString();
+        public string LastChangedDateShort => _lastChangedDateShort;
 
-        public ObservableCollection<ContentBaseViewModel> Children
-        {
-            get
-            {
-                return children;
-            }
-        }
+        public IEnumerable<ContentBaseViewModel> Children => _children;
     }
 }
