@@ -26,7 +26,7 @@ namespace WPFProject.ViewModels
 
             TreeViewModel = new TreeViewModel(contentBaseService);
             ListViewModel = new ListViewModel(contentBaseService);
-            TextBlockViewModel = new TextBlockViewModel();
+            TextBlockViewModel = new TextBlockViewModel(contentBaseService);
 
             this.WhenAnyValue(x => x.TreeViewModel.SelectedFolder)
                 .Subscribe(_ => BindSelectedFolderInListView());
@@ -65,9 +65,6 @@ namespace WPFProject.ViewModels
         private void SaveItem()
         {
             TextBlockViewModel.UpdateProp();
-            contentBaseService.Update(TextBlockViewModel.EditableItem.Model);
-            TextBlockViewModel.Clear();
-
             TreeViewModel.UpdateFoldersTree = true;
         }
     }

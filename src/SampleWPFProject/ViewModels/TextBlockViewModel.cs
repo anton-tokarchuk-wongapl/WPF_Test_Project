@@ -1,19 +1,23 @@
 ﻿using System;
 using System.Reactive.Linq;
+using BusinessLogicContracts.Interfaces;
 using ReactiveUI;
 
 namespace WPFProject.ViewModels
 {
     public class TextBlockViewModel : ReactiveObject
     {
+        private readonly IContentBaseService contentBaseService;
+
+        private ContentBaseViewModel editableItem;
+
         private string name;
 
         private string description;
 
-        private ContentBaseViewModel editableItem;
-
-        public TextBlockViewModel()
+        public TextBlockViewModel(IContentBaseService contentBaseService)
         {
+            this.contentBaseService = contentBaseService;
             this.WhenAnyValue(x => x.EditableItem)
                 .Where(i => !Equals(i, null))
                 .Subscribe(_ => BindProp());
@@ -24,7 +28,6 @@ namespace WPFProject.ViewModels
             get => editableItem;
             set => this.RaiseAndSetIfChanged(ref editableItem, value);
         }
-
 
         public string Name
         {
@@ -38,6 +41,20 @@ namespace WPFProject.ViewModels
             set => this.RaiseAndSetIfChanged(ref description, value);
         }
 
+        public void UpdateProp()
+        {
+            if (string.Equals(name, EditableItem.Name) || string.Equals(description, EditableItem.Description))
+            {
+                return;
+            }
+
+            EditableItem.Name = name;
+            EditableItem.Description = description;
+            contentBaseService.Update(EditableItem.Model);
+
+            Clear();
+        }
+
         public void Clear()
         {
             Name = string.Empty;
@@ -45,33 +62,10 @@ namespace WPFProject.ViewModels
             EditableItem = null;
         }
 
-        public void UpdateProp()
-        {
-            if (!CanSaveItem())
-            {
-                return;
-            }
-
-            EditableItem.Name = name;
-            EditableItem.Description = description;
-        }
-
         private void BindProp()
         {
             Name = EditableItem.Name;
             Description = EditableItem.Description;
-        }
-
-        private bool CanSaveItem()
-        {
-            bool result = false;
-
-            if (!string.Equals(name, EditableItem.Name) || !string.Equals(description, EditableItem.Description))
-            {
-                result = true;
-            }
-
-            return result;
         }
     }
 }
