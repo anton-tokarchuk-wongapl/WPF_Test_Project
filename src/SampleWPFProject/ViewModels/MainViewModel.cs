@@ -25,8 +25,6 @@ namespace WPFProject.ViewModels
             contentBaseService = new ContentBaseService();
 
             TreeViewModel = new TreeViewModel(contentBaseService);
-            TreeViewModel.CreateFoldersList();
-
             ListViewModel = new ListViewModel(contentBaseService);
             TextBlockViewModel = new TextBlockViewModel();
 
@@ -34,15 +32,21 @@ namespace WPFProject.ViewModels
                 .Subscribe(_ => BindSelectedFolder());
 
             this.WhenAnyValue(x => x.ListViewModel.SelectedItem)
-                .Subscribe(_ => EditItem());
+                .Subscribe(_ => BindSelectedItem());
 
             SaveItemCommand = ReactiveCommand.Create(() =>
             {
                 SaveItem();
             });
+            ClearCommand = ReactiveCommand.Create(() => 
+            {
+                TextBlockViewModel.Clear();
+            });
         }
 
         public ReactiveCommand<Unit, Unit> SaveItemCommand { get; }
+
+        public ReactiveCommand<Unit, Unit> ClearCommand { get; }
 
         private void BindSelectedFolder() => ListViewModel.SelectedFolder = TreeViewModel.SelectedFolder;
 
@@ -63,11 +67,11 @@ namespace WPFProject.ViewModels
                 TextBlockViewModel.Name = string.Empty;
                 TextBlockViewModel.Description = string.Empty;
 
-                TreeViewModel.CreateFoldersList();
+                TreeViewModel.UpdateFoldersTree = true;
             }
         }
 
-        private void EditItem()
+        private void BindSelectedItem()
         {
             var content = ListViewModel.SelectedItem;
 

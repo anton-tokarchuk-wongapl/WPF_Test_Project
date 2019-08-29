@@ -2,6 +2,7 @@
 using ReactiveUI;
 using System.Collections.Generic;
 using WPFProject.Helpers.Factories;
+using System.Reactive.Linq;
 
 namespace WPFProject.ViewModels
 {
@@ -11,15 +12,32 @@ namespace WPFProject.ViewModels
 
         private readonly ContentBaseViewModelFactory viewModelFactory;
 
-        private IEnumerable<ContentBaseViewModel> foldersList;
+        private readonly ObservableAsPropertyHelper<IEnumerable<ContentBaseViewModel>> _foldersList;
 
         private ContentFolderViewModel selectedFolder;
+
+        private bool updateFoldersTree = false;
 
         public TreeViewModel(IContentBaseService contentBaseService)
         {
             this.contentBaseService = contentBaseService;
             viewModelFactory = new ContentBaseViewModelFactory();
+
+            _foldersList = this
+                .WhenAnyValue(x => x.UpdateFoldersTree)
+                .Where(o => o.Equals(true))
+                .Select(i => GetFoldersList())
+                .ToProperty(this, x => x.FoldersList);
+
+            UpdateFoldersTree = true;
         }
+
+        public bool UpdateFoldersTree
+        {
+            get => updateFoldersTree;
+            set => this.RaiseAndSetIfChanged(ref updateFoldersTree, value);
+        }
+
 
         public ContentFolderViewModel SelectedFolder
         {
@@ -27,18 +45,15 @@ namespace WPFProject.ViewModels
             set => this.RaiseAndSetIfChanged(ref selectedFolder, value);
         }
 
-        public IEnumerable<ContentBaseViewModel> FoldersList
-        {
-            get => foldersList;
-            set => this.RaiseAndSetIfChanged(ref foldersList, value);
-        }
+        public IEnumerable<ContentBaseViewModel> FoldersList => _foldersList.Value;
 
-        public void CreateFoldersList()
+        private IEnumerable<ContentBaseViewModel> GetFoldersList()
         {
             var folders = contentBaseService.GetFoldersTree();
             var collection = viewModelFactory.GetViewModels(folders);
+            updateFoldersTree = false;
 
-            foldersList = new List<ContentBaseViewModel>(collection);
+            return new List<ContentBaseViewModel>(collection);
         }
     }
 }

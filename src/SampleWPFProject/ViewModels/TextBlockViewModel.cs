@@ -21,5 +21,12 @@ namespace WPFProject.ViewModels
             get => description;
             set => this.RaiseAndSetIfChanged(ref description, value);
         }
+
+        public void Clear()
+        {
+            Name = string.Empty;
+            Description = string.Empty;
+            EditableItem = null;
+        }
     }
 }

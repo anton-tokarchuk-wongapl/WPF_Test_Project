@@ -102,12 +102,22 @@
                 Margin="5,5,5,5"
                 Text="{Binding Path=TextBlockViewModel.Description, UpdateSourceTrigger=PropertyChanged}" />
             <Button
+                x:Name="EditItemButton"
+                Grid.Row="2"
+                Grid.Column="1"
+                Width="60"
+                Height="20"
+                Margin="245,0,75,5"
+                HorizontalAlignment="Right"
+                Command="{Binding ClearCommand}"
+                Content="Clear" />
+            <Button
                 x:Name="SaveItemButton"
                 Grid.Row="2"
                 Grid.Column="1"
                 Width="60"
                 Height="20"
-                Margin="0,0,20,5"
+                Margin="0,0,10,5"
                 HorizontalAlignment="Right"
                 Command="{Binding SaveItemCommand}"
                 Content="Save" />
