@@ -38,7 +38,6 @@ namespace WPFProject.ViewModels
             set => this.RaiseAndSetIfChanged(ref updateFoldersTree, value);
         }
 
-
         public ContentFolderViewModel SelectedFolder
         {
             get => selectedFolder;

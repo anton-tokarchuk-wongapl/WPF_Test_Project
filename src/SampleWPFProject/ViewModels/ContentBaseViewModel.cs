@@ -1,17 +1,14 @@
 ﻿using System.Collections.Generic;
 using BusinessLogicContracts.Models.ContentModels;
 using ReactiveUI;
-using WPFProject.Helpers.Factories;
 
 namespace WPFProject.ViewModels
 {
     public abstract class ContentBaseViewModel : ReactiveObject
     {
-        protected readonly ContentBaseViewModelFactory viewModelFactory;
-
         protected readonly ContentBaseViewModel ParentItem;
 
-        protected readonly IEnumerable<ContentBaseViewModel> _children;
+        protected IEnumerable<ContentBaseViewModel> _children;
 
         protected string _name;
 
@@ -26,11 +23,6 @@ namespace WPFProject.ViewModels
             _name = Model.Name;
             _description = Model.Description;
             _lastChangedDateShort = Model.LastChangedDate.ToShortDateString();
-
-            viewModelFactory = new ContentBaseViewModelFactory();
-
-            var list = viewModelFactory.GetViewModels(this.Model.Children, this);
-            _children = new List<ContentBaseViewModel>(list);
         }
 
         public ContentBaseModel Model { get; protected set; }

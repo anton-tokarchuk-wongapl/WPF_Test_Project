@@ -48,7 +48,11 @@ namespace WPFProject.ViewModels
 
         public ReactiveCommand<Unit, Unit> ClearCommand { get; }
 
-        private void BindSelectedFolder() => ListViewModel.SelectedFolder = TreeViewModel.SelectedFolder;
+        private void BindSelectedFolder()
+        {
+            ListViewModel.SelectedFolder = TreeViewModel.SelectedFolder;
+            ListViewModel.SelectedItem = TreeViewModel.SelectedFolder;
+        }
 
         private void SaveItem()
         {
@@ -73,14 +77,13 @@ namespace WPFProject.ViewModels
 
         private void BindSelectedItem()
         {
-            var content = ListViewModel.SelectedItem;
-
-            if (content != null)
+            if (ListViewModel.SelectedItem != null)
             {
-                TextBlockViewModel.Name = content.Name;
-                TextBlockViewModel.Description = content.Description;
+                var selectedItem = ListViewModel.SelectedItem;
 
-                TextBlockViewModel.EditableItem = content;
+                TextBlockViewModel.Name = selectedItem.Name;
+                TextBlockViewModel.Description = selectedItem.Description;
+                TextBlockViewModel.EditableItem = selectedItem;
             }
         }
     }
