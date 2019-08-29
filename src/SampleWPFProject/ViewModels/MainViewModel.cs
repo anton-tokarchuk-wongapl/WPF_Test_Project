@@ -14,11 +14,11 @@ namespace WPFProject.ViewModels
     {
         private readonly IContentBaseService contentBaseService;
 
+        public TreeViewModel TreeViewModel { get; }
+
         public ListViewModel ListViewModel { get; }
 
         public TextBlockViewModel TextBlockViewModel { get; }
-
-        public TreeViewModel TreeViewModel { get; }
 
         public MainViewModel()
         {
@@ -29,10 +29,10 @@ namespace WPFProject.ViewModels
             TextBlockViewModel = new TextBlockViewModel();
 
             this.WhenAnyValue(x => x.TreeViewModel.SelectedFolder)
-                .Subscribe(_ => BindSelectedFolder());
+                .Subscribe(_ => BindSelectedFolderInListView());
 
             this.WhenAnyValue(x => x.ListViewModel.SelectedItem)
-                .Subscribe(_ => BindSelectedItem());
+                .Subscribe(_ => BindSelectedItemInTextBlock());
 
             SaveItemCommand = ReactiveCommand.Create(() =>
             {
@@ -48,10 +48,22 @@ namespace WPFProject.ViewModels
 
         public ReactiveCommand<Unit, Unit> ClearCommand { get; }
 
-        private void BindSelectedFolder()
+        private void BindSelectedFolderInListView()
         {
             ListViewModel.SelectedFolder = TreeViewModel.SelectedFolder;
             ListViewModel.SelectedItem = TreeViewModel.SelectedFolder;
+        }
+
+        private void BindSelectedItemInTextBlock()
+        {
+            if (ListViewModel.SelectedItem != null)
+            {
+                var selectedItem = ListViewModel.SelectedItem;
+
+                TextBlockViewModel.Name = selectedItem.Name;
+                TextBlockViewModel.Description = selectedItem.Description;
+                TextBlockViewModel.EditableItem = selectedItem;
+            }
         }
 
         private void SaveItem()
@@ -72,18 +84,6 @@ namespace WPFProject.ViewModels
                 TextBlockViewModel.Description = string.Empty;
 
                 TreeViewModel.UpdateFoldersTree = true;
-            }
-        }
-
-        private void BindSelectedItem()
-        {
-            if (ListViewModel.SelectedItem != null)
-            {
-                var selectedItem = ListViewModel.SelectedItem;
-
-                TextBlockViewModel.Name = selectedItem.Name;
-                TextBlockViewModel.Description = selectedItem.Description;
-                TextBlockViewModel.EditableItem = selectedItem;
             }
         }
     }

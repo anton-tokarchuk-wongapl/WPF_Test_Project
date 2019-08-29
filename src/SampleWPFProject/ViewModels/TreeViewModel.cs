@@ -33,6 +33,8 @@ namespace WPFProject.ViewModels
             UpdateFoldersTree = true;
         }
 
+        public IEnumerable<ContentBaseViewModel> FoldersList => _foldersList.Value;
+
         public bool UpdateFoldersTree
         {
             get => updateFoldersTree;
@@ -44,8 +46,6 @@ namespace WPFProject.ViewModels
             get => selectedFolder;
             set => this.RaiseAndSetIfChanged(ref selectedFolder, value);
         }
-
-        public IEnumerable<ContentBaseViewModel> FoldersList => _foldersList.Value;
 
         private IEnumerable<ContentBaseViewModel> GetFoldersList()
         {
