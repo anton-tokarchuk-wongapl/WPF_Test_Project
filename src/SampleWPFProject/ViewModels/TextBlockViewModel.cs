@@ -41,9 +41,9 @@ namespace WPFProject.ViewModels
             set => this.RaiseAndSetIfChanged(ref description, value);
         }
 
-        public void UpdateProp()
+        public void UpdateItem()
         {
-            if (string.Equals(name, EditableItem.Name) || string.Equals(description, EditableItem.Description))
+            if (string.Equals(name, EditableItem.Name) && string.Equals(description, EditableItem.Description))
             {
                 return;
             }

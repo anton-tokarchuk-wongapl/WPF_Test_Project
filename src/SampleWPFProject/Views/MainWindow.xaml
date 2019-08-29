@@ -6,7 +6,7 @@
     xmlns:e="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:models="clr-namespace:WPFProject.ViewModels"
     Title="MainWindow"
-    Width="600"
+    Width="800"
     Height="615">
     <Window.Resources>
         <Style TargetType="TextBlock">

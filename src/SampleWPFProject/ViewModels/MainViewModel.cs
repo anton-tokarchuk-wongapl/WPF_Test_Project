@@ -64,7 +64,7 @@ namespace WPFProject.ViewModels
 
         private void SaveItem()
         {
-            TextBlockViewModel.UpdateProp();
+            TextBlockViewModel.UpdateItem();
             TreeViewModel.UpdateFoldersTree = true;
         }
     }
