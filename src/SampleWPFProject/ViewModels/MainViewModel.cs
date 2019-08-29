@@ -58,33 +58,17 @@ namespace WPFProject.ViewModels
         {
             if (ListViewModel.SelectedItem != null)
             {
-                var selectedItem = ListViewModel.SelectedItem;
-
-                TextBlockViewModel.Name = selectedItem.Name;
-                TextBlockViewModel.Description = selectedItem.Description;
-                TextBlockViewModel.EditableItem = selectedItem;
+                TextBlockViewModel.EditableItem = ListViewModel.SelectedItem;
             }
         }
 
         private void SaveItem()
         {
-            var name = TextBlockViewModel.Name;
-            var description = TextBlockViewModel.Description;
-            var editableItem = TextBlockViewModel.EditableItem;
+            TextBlockViewModel.UpdateProp();
+            contentBaseService.Update(TextBlockViewModel.EditableItem.Model);
+            TextBlockViewModel.Clear();
 
-            if (!string.Equals(name, editableItem.Name) || !string.Equals(description, editableItem.Description))
-            {
-                editableItem.Name = name;
-                editableItem.Description = description;
-
-                var model = editableItem.Model;
-                contentBaseService.Update(model);
-
-                TextBlockViewModel.Name = string.Empty;
-                TextBlockViewModel.Description = string.Empty;
-
-                TreeViewModel.UpdateFoldersTree = true;
-            }
+            TreeViewModel.UpdateFoldersTree = true;
         }
     }
 }

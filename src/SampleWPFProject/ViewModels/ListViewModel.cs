@@ -26,7 +26,7 @@ namespace WPFProject.ViewModels
 
             _contentList = this
                 .WhenAnyValue(x => x.SelectedFolder)
-                .Where(o => !ObjectIsNull(o))
+                .Where(o => !Equals(o, null))
                 .Select(t => GetContentList(t.Id))
                 .ToProperty(this, x => x.ContentList);
         }
@@ -51,18 +51,6 @@ namespace WPFProject.ViewModels
             var list = viewModelFactory.GetViewModels(item.Children, selectedFolder);
 
             return new List<ContentBaseViewModel>(list);
-        }
-
-        private bool ObjectIsNull(object obj)
-        {
-            bool result = true;
-
-            if (obj != null)
-            {
-                result = false;
-            }
-
-            return result;
         }
     }
 }
