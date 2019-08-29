@@ -1,9 +1,9 @@
-﻿using BusinessLogicLayer.Services;
-using BusinessLogicContracts.Interfaces;
-using ReactiveUI;
+﻿using System;
 using System.Reactive;
-using System;
 using System.Reactive.Linq;
+using ReactiveUI;
+using BusinessLogicLayer.Services;
+using BusinessLogicContracts.Interfaces;
 
 namespace WPFProject.ViewModels
 {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using BusinessLogicContracts.Models.ContentModels;
 using ReactiveUI;
+using BusinessLogicContracts.Models.ContentModels;
 
 namespace WPFProject.ViewModels
 {

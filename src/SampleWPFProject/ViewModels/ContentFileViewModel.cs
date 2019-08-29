@@ -1,5 +1,4 @@
 ﻿using BusinessLogicContracts.Models.ContentModels;
-using WPFProject.Helpers.Factories;
 
 namespace WPFProject.ViewModels
 {

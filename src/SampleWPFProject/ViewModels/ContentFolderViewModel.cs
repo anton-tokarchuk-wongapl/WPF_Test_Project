@@ -1,5 +1,5 @@
-﻿using BusinessLogicContracts.Models.ContentModels;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using BusinessLogicContracts.Models.ContentModels;
 using WPFProject.Helpers.Factories;
 
 namespace WPFProject.ViewModels

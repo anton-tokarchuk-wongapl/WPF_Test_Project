@@ -1,9 +1,9 @@
-﻿using BusinessLogicContracts.Interfaces;
-using WPFProject.Helpers.Factories;
-using ReactiveUI;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
+using ReactiveUI;
+using BusinessLogicContracts.Interfaces;
+using WPFProject.Helpers.Factories;
 
 namespace WPFProject.ViewModels
 {
@@ -13,11 +13,11 @@ namespace WPFProject.ViewModels
 
         private readonly ContentBaseViewModelFactory viewModelFactory;
 
+        private readonly ObservableAsPropertyHelper<IEnumerable<ContentBaseViewModel>> _contentList;
+
         private ContentFolderViewModel selectedFolder;
 
         private ContentBaseViewModel selectedItem;
-
-        private readonly ObservableAsPropertyHelper<IEnumerable<ContentBaseViewModel>> _contentList;
 
         public ListViewModel(IContentBaseService contentBaseService)
         {
@@ -26,7 +26,7 @@ namespace WPFProject.ViewModels
 
             _contentList = this
                 .WhenAnyValue(x => x.SelectedFolder)
-                .Where(o => !IsNull(o))
+                .Where(o => !ObjectIsNull(o))
                 .Select(t => GetContentList(t.Id))
                 .ToProperty(this, x => x.ContentList);
         }
@@ -53,12 +53,16 @@ namespace WPFProject.ViewModels
             return new List<ContentBaseViewModel>(list);
         }
 
-        private bool IsNull(object obj)
+        private bool ObjectIsNull(object obj)
         {
-            if (obj == null)
-                return true;
-            else
-                return false;
+            bool result = true;
+
+            if (obj != null)
+            {
+                result = false;
+            }
+
+            return result;
         }
     }
 }

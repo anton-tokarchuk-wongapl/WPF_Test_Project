@@ -1,8 +1,9 @@
-﻿using BusinessLogicContracts.Interfaces;
-using ReactiveUI;
-using System.Collections.Generic;
-using WPFProject.Helpers.Factories;
+﻿using System.Collections.Generic;
 using System.Reactive.Linq;
+using ReactiveUI;
+using BusinessLogicContracts.Interfaces;
+using WPFProject.Helpers.Factories;
+
 
 namespace WPFProject.ViewModels
 {
