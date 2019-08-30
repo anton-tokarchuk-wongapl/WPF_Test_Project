@@ -15,9 +15,9 @@ namespace WPFProject.ViewModels
 
         private readonly ObservableAsPropertyHelper<IEnumerable<ContentBaseViewModel>> _contentList;
 
-        private ContentFolderViewModel selectedFolder;
+        private ContentFolderViewModel selectedTreeViewItem;
 
-        private ContentBaseViewModel selectedItem;
+        private ContentBaseViewModel selectedListViewItem;
 
         public ListViewModel(IContentBaseService contentBaseService)
         {
@@ -25,7 +25,7 @@ namespace WPFProject.ViewModels
             viewModelFactory = new ContentBaseViewModelFactory();
 
             _contentList = this
-                .WhenAnyValue(x => x.SelectedFolder)
+                .WhenAnyValue(x => x.SelectedTreeViewItem)
                 .Where(o => !Equals(o, null))
                 .Select(t => GetContentList(t.Id))
                 .ToProperty(this, x => x.ContentList);
@@ -33,22 +33,22 @@ namespace WPFProject.ViewModels
 
         public IEnumerable<ContentBaseViewModel> ContentList => _contentList.Value;
 
-        public ContentBaseViewModel SelectedItem
+        public ContentBaseViewModel SelectedListViewItem
         {
-            get => selectedItem;
-            set => this.RaiseAndSetIfChanged(ref selectedItem, value);
+            get => selectedListViewItem;
+            set => this.RaiseAndSetIfChanged(ref selectedListViewItem, value);
         }
 
-        public ContentFolderViewModel SelectedFolder
+        public ContentFolderViewModel SelectedTreeViewItem
         {
-            get => selectedFolder;
-            set => this.RaiseAndSetIfChanged(ref selectedFolder, value);
+            get => selectedTreeViewItem;
+            set => this.RaiseAndSetIfChanged(ref selectedTreeViewItem, value);
         }
 
         private IEnumerable<ContentBaseViewModel> GetContentList(int id)
         {
             var item = contentBaseService.GetContentItemById(id);
-            var list = viewModelFactory.GetViewModels(item.Children, selectedFolder);
+            var list = viewModelFactory.GetViewModels(item.Children, selectedTreeViewItem);
 
             return new List<ContentBaseViewModel>(list);
         }

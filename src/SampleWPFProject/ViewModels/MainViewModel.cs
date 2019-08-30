@@ -31,7 +31,7 @@ namespace WPFProject.ViewModels
             this.WhenAnyValue(x => x.TreeViewModel.SelectedFolder)
                 .Subscribe(_ => BindSelectedFolderInListView());
 
-            this.WhenAnyValue(x => x.ListViewModel.SelectedItem)
+            this.WhenAnyValue(x => x.ListViewModel.SelectedListViewItem)
                 .Subscribe(_ => BindSelectedItemInTextBlock());
 
             SaveItemCommand = ReactiveCommand.Create(() =>
@@ -50,16 +50,13 @@ namespace WPFProject.ViewModels
 
         private void BindSelectedFolderInListView()
         {
-            ListViewModel.SelectedFolder = TreeViewModel.SelectedFolder;
-            ListViewModel.SelectedItem = TreeViewModel.SelectedFolder;
+            ListViewModel.SelectedTreeViewItem = TreeViewModel.SelectedFolder;
+            ListViewModel.SelectedListViewItem = TreeViewModel.SelectedFolder;
         }
 
         private void BindSelectedItemInTextBlock()
         {
-            if (ListViewModel.SelectedItem != null)
-            {
-                TextBlockViewModel.EditableItem = ListViewModel.SelectedItem;
-            }
+            TextBlockViewModel.EditableItem = ListViewModel.SelectedListViewItem;
         }
 
         private void SaveItem()
