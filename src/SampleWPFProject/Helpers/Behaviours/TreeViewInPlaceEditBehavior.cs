@@ -66,7 +66,7 @@ namespace WPFProject.Helpers.Behaviours
         {
             TreeView treeView = obj as TreeView;
 
-            if (treeView == null)
+            if (Equals(treeView, null))
             {
                 throw new ArgumentException("obj is not a TreeView");
             }
@@ -111,7 +111,7 @@ namespace WPFProject.Helpers.Behaviours
             var treeView = (TreeView)sender;
             var lastSelectedItem = GetLastSelectedItem(treeView);
 
-            if (lastSelectedItem != treeView.SelectedItem)
+            if (!Equals(lastSelectedItem, treeView.SelectedItem))
             {
                 SetLastSelectedItem(treeView, treeView.SelectedItem);
                 SetLastSelectedTime(treeView, DateTime.Now);
@@ -125,14 +125,14 @@ namespace WPFProject.Helpers.Behaviours
             var element = (UIElement) e.OriginalSource;
 
             var selectedItem = element.ParentOfType<TreeViewItem>();
-            if (selectedItem == null)
+            if (Equals(selectedItem, null))
             {
                 treeView.EndEdit();
                 return;
             }
 
             var lastSelectedItem = GetLastSelectedItem(treeView);
-            if (lastSelectedItem == null || lastSelectedItem != treeView.SelectedItem)
+            if (Equals(selectedItem, null) || !Equals(lastSelectedItem, treeView.SelectedItem))
             {
                 return;
             }
