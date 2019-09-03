@@ -52,7 +52,7 @@
             Grid.Column="1"
             Margin="5,5,5,5"
             ItemsSource="{Binding Path=ListViewModel.ContentList}"
-            SelectedItem="{Binding Path=ListViewModel.SelectedItem}">
+            SelectedItem="{Binding Path=ListViewModel.SelectedListViewItem}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Name}">Name</GridViewColumn>

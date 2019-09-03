@@ -20,7 +20,11 @@ namespace WPFProject.ViewModels
             this.contentBaseService = contentBaseService;
             this.WhenAnyValue(x => x.EditableItem)
                 .Where(i => !Equals(i, null))
-                .Subscribe(_ => BindProp());
+                .Subscribe(y => 
+                {
+                    Name = EditableItem.Name;
+                    Description = EditableItem.Description;
+                });
         }
 
         public ContentBaseViewModel EditableItem
@@ -60,12 +64,6 @@ namespace WPFProject.ViewModels
             Name = string.Empty;
             Description = string.Empty;
             EditableItem = null;
-        }
-
-        private void BindProp()
-        {
-            Name = EditableItem.Name;
-            Description = EditableItem.Description;
         }
     }
 }
