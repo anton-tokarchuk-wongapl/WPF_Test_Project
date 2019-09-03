@@ -85,24 +85,25 @@ namespace WPFProject.Helpers.Behaviours
 
         private static void TreeViewPreviewKeyDown(object sender, KeyEventArgs e)
         {
-            var treeView = (TreeView) sender;
+            TreeView treeView = (TreeView) sender;
+
             switch (e.Key)
             {
                 case Key.F2:
                     treeView.BeginEdit();
-                break;
+                    break;
                 case Key.Escape:
                     if (treeView.IsEditing())
                     {
                         treeView.EndEdit();
                     }
-                break;
+                    break;
                 case Key.Return:
                     if (treeView.IsEditing())
                     {
                         treeView.EndEdit(false);
                     }
-                break;
+                    break;
             }
         }
 
