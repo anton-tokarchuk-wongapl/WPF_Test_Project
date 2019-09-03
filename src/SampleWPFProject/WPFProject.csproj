@@ -140,6 +140,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Helpers\Behaviours\TreeViewInPlaceEditBehavior.cs" />
+    <Compile Include="Helpers\Behaviours\TreeViewInPlaceEditBoxBehavior.cs" />
+    <Compile Include="Helpers\Extensions\DependencyObjectExtension.cs" />
+    <Compile Include="Helpers\Extensions\FrameworkElementExtension.cs" />
     <Compile Include="Helpers\Factories\ContentBaseViewModelFactory.cs" />
     <Compile Include="ViewModels\ContentBaseViewModel.cs" />
     <Compile Include="ViewModels\ContentFileViewModel.cs" />
@@ -202,6 +206,7 @@
       <Name>BusinessLogicLayer</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
