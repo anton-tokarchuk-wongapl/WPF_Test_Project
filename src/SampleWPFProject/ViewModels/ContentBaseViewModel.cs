@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using ReactiveUI;
 using BusinessLogicContracts.Models.ContentModels;
+using System.ComponentModel;
+using System;
 
 namespace WPFProject.ViewModels
 {
-    public abstract class ContentBaseViewModel : ReactiveObject
+    public abstract class ContentBaseViewModel : ReactiveObject, IDataErrorInfo
     {
         protected readonly ContentBaseViewModel ParentItem;
 
@@ -26,6 +28,8 @@ namespace WPFProject.ViewModels
         }
 
         public ContentBaseModel Model { get; protected set; }
+
+        public string Error => null; 
 
         public int Id => Model.Id;
 
@@ -52,5 +56,45 @@ namespace WPFProject.ViewModels
         public string LastChangedDateShort => _lastChangedDateShort;
 
         public IEnumerable<ContentBaseViewModel> Children => _children;
+
+        public string this[string columnName]
+        {
+            get
+            {
+                string error = string.Empty;
+
+                switch (columnName)
+                {
+                    case "Name":
+                        error = ValidateStringProperty(Name);
+                        break;
+                    case "Description":
+                        error = ValidateStringProperty(Description);
+                        break;
+                }
+
+                return error;
+            }
+        }
+
+        protected string ValidateStringProperty(string property)
+        {
+            string result = string.Empty;
+
+            if (string.IsNullOrWhiteSpace(property))
+            {
+                result = "Field cannot be empty";
+            }
+            else if (property.Length > 100)
+            {
+                result = "Field cannot be more 100 symbols";
+            }
+            else if (property.Length < 3)
+            {
+                result = "Field cannot be less of 3 symbols";
+            }
+
+            return result;
+        }
     }
 }

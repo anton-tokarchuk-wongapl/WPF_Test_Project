@@ -14,6 +14,11 @@
         </Style>
         <Style TargetType="TextBox">
             <Setter Property="FontSize" Value="14" />
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}" />
+                </Trigger>
+            </Style.Triggers>
         </Style>
     </Window.Resources>
     <Grid x:Name="ParentGrid">
@@ -50,10 +55,16 @@
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type models:ContentBaseViewModel}" ItemsSource="{Binding Path=Children, UpdateSourceTrigger=PropertyChanged}">
                     <Grid x:Name="HierarchicalDataTemplateGrid">
-                        <TextBlock Text="{Binding Path=Name}" />
+                        <TextBlock Text="{Binding Path=Name}">
+                            <TextBlock.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Command="" Header="Edit" />
+                                </ContextMenu>
+                            </TextBlock.ContextMenu>
+                        </TextBlock>
                         <TextBox
                             x:Name="TextBox"
-                            Text="{Binding Path=Name, UpdateSourceTrigger=Explicit}"
+                            Text="{Binding Path=Name, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
                             Visibility="Collapsed" />
                     </Grid>
                     <HierarchicalDataTemplate.Triggers>
@@ -130,15 +141,17 @@
                 HorizontalAlignment="Center"
                 Text="Description" />
             <TextBox
+                x:Name="NameTextBox"
                 Grid.Row="0"
                 Grid.Column="1"
                 Margin="5,5,5,5"
-                Text="{Binding Path=TextBlockViewModel.Name, UpdateSourceTrigger=PropertyChanged}" />
+                Text="{Binding Path=TextBlockViewModel.Name, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
             <TextBox
+                x:Name="DescriptionTextBox"
                 Grid.Row="1"
                 Grid.Column="1"
                 Margin="5,5,5,5"
-                Text="{Binding Path=TextBlockViewModel.Description, UpdateSourceTrigger=PropertyChanged}" />
+                Text="{Binding Path=TextBlockViewModel.Description, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
             <Button
                 x:Name="EditItemButton"
                 Grid.Row="2"

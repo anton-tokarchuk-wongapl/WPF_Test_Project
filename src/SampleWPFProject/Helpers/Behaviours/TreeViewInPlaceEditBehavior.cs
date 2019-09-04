@@ -86,7 +86,7 @@ namespace WPFProject.Helpers.Behaviours
         private static void TreeViewPreviewKeyDown(object sender, KeyEventArgs e)
         {
             TreeView treeView = (TreeView) sender;
-
+             
             switch (e.Key)
             {
                 case Key.F2:
