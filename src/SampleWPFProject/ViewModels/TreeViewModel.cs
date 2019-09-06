@@ -3,7 +3,8 @@ using System.Reactive.Linq;
 using ReactiveUI;
 using BusinessLogicContracts.Interfaces;
 using WPFProject.Helpers.Factories;
-
+using System.Reactive;
+using System.Linq;
 
 namespace WPFProject.ViewModels
 {
@@ -30,10 +31,31 @@ namespace WPFProject.ViewModels
                 .Select(i => GetFoldersList())
                 .ToProperty(this, x => x.FoldersList);
 
+            StartEditing = ReactiveCommand.Create<int>(x => StartEditingById(x));
+            ConfirmEditing = ReactiveCommand.Create(() => 
+            {
+                var item = (ContentFolderViewModel)FoldersList.FirstOrDefault(x => x.IsEditing == true);
+                item.Name = item.EditableName;
+                contentBaseService.Update(item.Model);
+
+                DisableEditing();
+            });
+
+            CancelEditing = ReactiveCommand.Create(() => 
+            {
+                DisableEditing();
+            });
+
             UpdateFoldersTree = true;
         }
 
         public IEnumerable<ContentBaseViewModel> FoldersList => _foldersList.Value;
+
+        public ReactiveCommand<int, Unit> StartEditing { get; }
+
+        public ReactiveCommand<Unit, Unit> CancelEditing { get; }
+
+        public ReactiveCommand<Unit, Unit> ConfirmEditing { get; }
 
         public bool UpdateFoldersTree
         {
@@ -55,5 +77,18 @@ namespace WPFProject.ViewModels
 
             return new List<ContentBaseViewModel>(collection);
         }
+
+        private void StartEditingById(int id)
+        {
+            if (Equals(id, null))
+            {
+                return;
+            }
+
+            FoldersList.Where(x => x.Id == id).ToList().ForEach(s => s.IsEditing = true);
+        }
+
+        private void DisableEditing()
+            => FoldersList.Where(x => x.IsEditing == true).ToList().ForEach(s => s.IsEditing = false);
     }
 }

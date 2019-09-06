@@ -2,7 +2,6 @@
 using ReactiveUI;
 using BusinessLogicContracts.Models.ContentModels;
 using System.ComponentModel;
-using System;
 
 namespace WPFProject.ViewModels
 {
@@ -18,6 +17,8 @@ namespace WPFProject.ViewModels
 
         protected string _lastChangedDateShort;
 
+        private bool isEditing = false;
+
         public ContentBaseViewModel(ContentBaseModel Model, ContentBaseViewModel ParentItem = null)
         {
             this.ParentItem = ParentItem;
@@ -32,6 +33,12 @@ namespace WPFProject.ViewModels
         public string Error => null; 
 
         public int Id => Model.Id;
+
+        public bool IsEditing
+        {
+            get => isEditing;
+            set => this.RaiseAndSetIfChanged(ref isEditing, value);
+        }
 
         public string Name
         {

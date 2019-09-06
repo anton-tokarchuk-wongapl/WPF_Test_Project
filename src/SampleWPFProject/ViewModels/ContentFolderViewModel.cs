@@ -9,28 +9,21 @@ namespace WPFProject.ViewModels
     {
         private readonly ContentBaseViewModelFactory viewModelFactory;
 
-        private bool isSelected;
-
-        private bool isExpanded;
+        private string editableName;
 
         public ContentFolderViewModel(ContentBaseModel Model, ContentBaseViewModel parent) : base(Model, parent)
         {
+            editableName = Name;
             viewModelFactory = new ContentBaseViewModelFactory();
 
             var list = viewModelFactory.GetViewModels(this.Model.Children, this);
             _children = new List<ContentBaseViewModel>(list);
         }
 
-        public bool IsSelected
+        public string EditableName
         {
-            get => isSelected;
-            set => this.RaiseAndSetIfChanged(ref isSelected, value);
-        }
-
-        public bool IsExpanded
-        {
-            get => isExpanded;
-            set => this.RaiseAndSetIfChanged(ref isExpanded, value);
+            get => editableName;
+            set => this.RaiseAndSetIfChanged(ref editableName, value);
         }
     }
 }

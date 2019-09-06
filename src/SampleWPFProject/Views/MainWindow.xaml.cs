@@ -13,15 +13,5 @@ namespace WPFProject.Views
             InitializeComponent();
             DataContext = new MainViewModel();
         }
-
-        private void MenuItem_AccessKeyPressed(object sender, System.Windows.Input.AccessKeyPressedEventArgs e)
-        {
-
-        }
-
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }
