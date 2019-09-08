@@ -5,18 +5,24 @@ using BusinessLogicContracts.Interfaces;
 using WPFProject.Helpers.Factories;
 using System.Reactive;
 using System.Linq;
+using WPFProject.Helpers.Validation;
+using System.ComponentModel;
 
 namespace WPFProject.ViewModels
 {
-    public class TreeViewModel : ReactiveObject
+    public class TreeViewModel : ReactiveObject, IDataErrorInfo
     {
         private readonly IContentBaseService contentBaseService;
 
         private readonly ContentBaseViewModelFactory viewModelFactory;
 
+        private readonly UserInputValidation userInputValidation;
+
         private readonly ObservableAsPropertyHelper<IEnumerable<ContentBaseViewModel>> _foldersList;
 
         private ContentFolderViewModel selectedFolder;
+
+        private string selectedEditableFolderName;
 
         private bool updateFoldersTree = false;
 
@@ -24,6 +30,7 @@ namespace WPFProject.ViewModels
         {
             this.contentBaseService = contentBaseService;
             viewModelFactory = new ContentBaseViewModelFactory();
+            userInputValidation = new UserInputValidation();
 
             _foldersList = this
                 .WhenAnyValue(x => x.UpdateFoldersTree)
@@ -31,11 +38,22 @@ namespace WPFProject.ViewModels
                 .Select(i => GetFoldersList())
                 .ToProperty(this, x => x.FoldersList);
 
-            StartEditing = ReactiveCommand.Create<int>(x => StartEditingById(x));
+            StartEditing = ReactiveCommand.Create<int>(x => 
+            {
+                if (!Equals(x, null))
+                {
+                    FoldersList.Where(i => i.Id == x).ToList().ForEach(s =>
+                    {
+                        s.IsEditing = true;
+                        SelectedEditableFolderName = s.Name;
+                    });
+                }
+            });
+
             ConfirmEditing = ReactiveCommand.Create(() => 
             {
                 var item = (ContentFolderViewModel)FoldersList.FirstOrDefault(x => x.IsEditing == true);
-                item.Name = item.EditableName;
+                item.Name = SelectedEditableFolderName;
                 contentBaseService.Update(item.Model);
 
                 DisableEditing();
@@ -57,6 +75,27 @@ namespace WPFProject.ViewModels
 
         public ReactiveCommand<Unit, Unit> ConfirmEditing { get; }
 
+        public string this[string columnName]
+        {
+            get
+            {
+                string error = string.Empty;
+
+                if (Equals(columnName, nameof(SelectedEditableFolderName)))
+                {
+                    error = userInputValidation.ValidateStringProperty(SelectedEditableFolderName);
+                }
+
+                return error;
+            }
+        }
+
+        public string SelectedEditableFolderName
+        {
+            get => selectedEditableFolderName;
+            set => this.RaiseAndSetIfChanged(ref selectedEditableFolderName, value);
+        }
+
         public bool UpdateFoldersTree
         {
             get => updateFoldersTree;
@@ -69,6 +108,8 @@ namespace WPFProject.ViewModels
             set => this.RaiseAndSetIfChanged(ref selectedFolder, value);
         }
 
+        public string Error => null;
+
         private IEnumerable<ContentBaseViewModel> GetFoldersList()
         {
             var folders = contentBaseService.GetFoldersTree();
@@ -76,16 +117,6 @@ namespace WPFProject.ViewModels
             updateFoldersTree = false;
 
             return new List<ContentBaseViewModel>(collection);
-        }
-
-        private void StartEditingById(int id)
-        {
-            if (Equals(id, null))
-            {
-                return;
-            }
-
-            FoldersList.Where(x => x.Id == id).ToList().ForEach(s => s.IsEditing = true);
         }
 
         private void DisableEditing()

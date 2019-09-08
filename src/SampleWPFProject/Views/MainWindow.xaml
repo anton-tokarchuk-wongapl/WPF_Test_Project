@@ -22,6 +22,10 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <Style TargetType="Button">
+            <Setter Property="Height" Value="20" />
+            <Setter Property="Width" Value="60" />
+        </Style>
 
         <t:BindingProxy x:Key="MainViewModelDataContextProxy" Data="{Binding DataContext, ElementName=ParentGrid}" />
     </Window.Resources>
@@ -52,7 +56,7 @@
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type models:ContentFolderViewModel}" ItemsSource="{Binding Path=Children, UpdateSourceTrigger=PropertyChanged}">
                     <Grid x:Name="HierarchicalDataTemplateGrid">
-                        <TextBlock Text="{Binding Path=Name}">
+                        <TextBlock Text="{Binding Name}">
                             <TextBlock.ContextMenu>
                                 <ContextMenu>
                                     <MenuItem
@@ -64,7 +68,7 @@
                         </TextBlock>
                         <TextBox
                             x:Name="TextBox"
-                            Text="{Binding Path=EditableName, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                            Text="{Binding Data.TreeViewModel.SelectedEditableFolderName, Source={StaticResource MainViewModelDataContextProxy}, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
                             Visibility="Collapsed">
                             <TextBox.InputBindings>
                                 <KeyBinding Key="Esc" Command="{Binding Data.TreeViewModel.CancelEditing, Source={StaticResource MainViewModelDataContextProxy}}" />
@@ -142,8 +146,6 @@
                 x:Name="EditItemButton"
                 Grid.Row="2"
                 Grid.Column="1"
-                Width="60"
-                Height="20"
                 Margin="245,0,75,5"
                 HorizontalAlignment="Right"
                 Command="{Binding ClearCommand}"
@@ -152,8 +154,6 @@
                 x:Name="SaveItemButton"
                 Grid.Row="2"
                 Grid.Column="1"
-                Width="60"
-                Height="20"
                 Margin="0,0,10,5"
                 HorizontalAlignment="Right"
                 Command="{Binding SaveItemCommand}"
