@@ -144,7 +144,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Helpers\Factories\ContentBaseViewModelFactory.cs" />
-    <Compile Include="Helpers\Tools\BindingProxy.cs" />
     <Compile Include="Helpers\Validation\UserInputValidation.cs" />
     <Compile Include="ViewModels\ContentBaseViewModel.cs" />
     <Compile Include="ViewModels\ContentFileViewModel.cs" />
