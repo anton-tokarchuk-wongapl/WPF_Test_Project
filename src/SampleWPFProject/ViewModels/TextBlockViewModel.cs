@@ -81,18 +81,23 @@ namespace WPFProject.ViewModels
                 return;
             }
 
-            EditableItem.Name = name;
-            EditableItem.Description = description;
-            contentBaseService.Update(EditableItem.Model);
+            var canSaveName = userInputValidation.ValidateStringProperty(Name);
+            var canSaveDescription = userInputValidation.ValidateStringProperty(Description);
 
-            Clear();
+            if (string.IsNullOrEmpty(canSaveName) && string.IsNullOrEmpty(canSaveDescription))
+            {
+                EditableItem.Name = name;
+                EditableItem.Description = description;
+                contentBaseService.Update(EditableItem.Model);
+
+                Clear();
+            }
         }
 
         public void Clear()
         {
-            Name = string.Empty;
-            Description = string.Empty;
             EditableItem = null;
-        }
+            Name = null;
+            Description = null;        }
     }
 }

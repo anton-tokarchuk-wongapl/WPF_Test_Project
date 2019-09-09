@@ -52,10 +52,15 @@ namespace WPFProject.ViewModels
 
             ConfirmEditing = ReactiveCommand.Create(() => 
             {
-                var item = (ContentFolderViewModel)FoldersList.FirstOrDefault(x => x.IsEditing == true);
-                item.Name = SelectedEditableFolderName;
-                contentBaseService.Update(item.Model);
+                var canSave = userInputValidation.ValidateStringProperty(SelectedEditableFolderName);
 
+                if (string.IsNullOrEmpty(canSave))
+                {
+                    var item = (ContentFolderViewModel)FoldersList.FirstOrDefault(x => x.IsEditing == true);
+                    item.Name = SelectedEditableFolderName;
+                    contentBaseService.Update(item.Model);
+                }
+                
                 DisableEditing();
             });
 
