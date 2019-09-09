@@ -76,21 +76,24 @@ namespace WPFProject.ViewModels
 
         public void UpdateItem()
         {
-            if (string.Equals(name, EditableItem.Name) && string.Equals(description, EditableItem.Description))
+            if (Equals(EditableItem, null))
             {
                 return;
             }
 
-            var canSaveName = userInputValidation.ValidateStringProperty(Name);
-            var canSaveDescription = userInputValidation.ValidateStringProperty(Description);
-
-            if (string.IsNullOrEmpty(canSaveName) && string.IsNullOrEmpty(canSaveDescription))
+            if (!string.Equals(name, EditableItem.Name) && string.Equals(description, EditableItem.Description))
             {
-                EditableItem.Name = name;
-                EditableItem.Description = description;
-                contentBaseService.Update(EditableItem.Model);
+                var canSaveName = userInputValidation.ValidateStringProperty(Name);
+                var canSaveDescription = userInputValidation.ValidateStringProperty(Description);
 
-                Clear();
+                if (string.IsNullOrEmpty(canSaveName) && string.IsNullOrEmpty(canSaveDescription))
+                {
+                    EditableItem.Name = name;
+                    EditableItem.Description = description;
+                    contentBaseService.Update(EditableItem.Model);
+
+                    Clear();
+                }
             }
         }
 
@@ -98,6 +101,7 @@ namespace WPFProject.ViewModels
         {
             EditableItem = null;
             Name = null;
-            Description = null;        }
+            Description = null;
+        }
     }
 }

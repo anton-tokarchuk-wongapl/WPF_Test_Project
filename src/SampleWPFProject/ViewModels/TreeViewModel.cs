@@ -10,19 +10,15 @@ using System.ComponentModel;
 
 namespace WPFProject.ViewModels
 {
-    public class TreeViewModel : ReactiveObject, IDataErrorInfo
+    public class TreeViewModel : ReactiveObject
     {
         private readonly IContentBaseService contentBaseService;
 
         private readonly ContentBaseViewModelFactory viewModelFactory;
 
-        private readonly UserInputValidation userInputValidation;
-
-        private readonly ObservableAsPropertyHelper<IEnumerable<ContentBaseViewModel>> _foldersList;
+        private readonly ObservableAsPropertyHelper<IEnumerable<ContentFolderViewModel>> _foldersList;
 
         private ContentFolderViewModel selectedFolder;
-
-        private string selectedEditableFolderName;
 
         private bool updateFoldersTree = false;
 
@@ -30,7 +26,6 @@ namespace WPFProject.ViewModels
         {
             this.contentBaseService = contentBaseService;
             viewModelFactory = new ContentBaseViewModelFactory();
-            userInputValidation = new UserInputValidation();
 
             _foldersList = this
                 .WhenAnyValue(x => x.UpdateFoldersTree)
@@ -38,68 +33,10 @@ namespace WPFProject.ViewModels
                 .Select(i => GetFoldersList())
                 .ToProperty(this, x => x.FoldersList);
 
-            StartEditing = ReactiveCommand.Create<int>(x => 
-            {
-                if (!Equals(x, null))
-                {
-                    FoldersList.Where(i => i.Id == x).ToList().ForEach(s =>
-                    {
-                        s.IsEditing = true;
-                        SelectedEditableFolderName = s.Name;
-                    });
-                }
-            });
-
-            ConfirmEditing = ReactiveCommand.Create(() => 
-            {
-                var canSave = userInputValidation.ValidateStringProperty(SelectedEditableFolderName);
-
-                if (string.IsNullOrEmpty(canSave))
-                {
-                    var item = (ContentFolderViewModel)FoldersList.FirstOrDefault(x => x.IsEditing == true);
-                    item.Name = SelectedEditableFolderName;
-                    contentBaseService.Update(item.Model);
-                }
-                
-                DisableEditing();
-            });
-
-            CancelEditing = ReactiveCommand.Create(() => 
-            {
-                DisableEditing();
-            });
-
             UpdateFoldersTree = true;
         }
 
-        public IEnumerable<ContentBaseViewModel> FoldersList => _foldersList.Value;
-
-        public ReactiveCommand<int, Unit> StartEditing { get; }
-
-        public ReactiveCommand<Unit, Unit> CancelEditing { get; }
-
-        public ReactiveCommand<Unit, Unit> ConfirmEditing { get; }
-
-        public string this[string columnName]
-        {
-            get
-            {
-                string error = string.Empty;
-
-                if (Equals(columnName, nameof(SelectedEditableFolderName)))
-                {
-                    error = userInputValidation.ValidateStringProperty(SelectedEditableFolderName);
-                }
-
-                return error;
-            }
-        }
-
-        public string SelectedEditableFolderName
-        {
-            get => selectedEditableFolderName;
-            set => this.RaiseAndSetIfChanged(ref selectedEditableFolderName, value);
-        }
+        public IEnumerable<ContentFolderViewModel> FoldersList => _foldersList.Value;
 
         public bool UpdateFoldersTree
         {
@@ -115,16 +52,13 @@ namespace WPFProject.ViewModels
 
         public string Error => null;
 
-        private IEnumerable<ContentBaseViewModel> GetFoldersList()
+        private IEnumerable<ContentFolderViewModel> GetFoldersList()
         {
             var folders = contentBaseService.GetFoldersTree();
-            var collection = viewModelFactory.GetViewModels(folders);
+            var collection = viewModelFactory.GetFoldersViewModels(folders, contentBaseService);
             updateFoldersTree = false;
 
-            return new List<ContentBaseViewModel>(collection);
+            return new List<ContentFolderViewModel>(collection);
         }
-
-        private void DisableEditing()
-            => FoldersList.Where(x => x.IsEditing == true).ToList().ForEach(s => s.IsEditing = false);
     }
 }

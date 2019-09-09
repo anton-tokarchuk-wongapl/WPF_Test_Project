@@ -59,20 +59,17 @@
                         <TextBlock Text="{Binding Name}">
                             <TextBlock.ContextMenu>
                                 <ContextMenu>
-                                    <MenuItem
-                                        Command="{Binding Data.TreeViewModel.StartEditing, Source={StaticResource MainViewModelDataContextProxy}}"
-                                        CommandParameter="{Binding Path=Id}"
-                                        Header="Edit" />
+                                    <MenuItem Command="{Binding Path=StartEditing}" Header="Edit" />
                                 </ContextMenu>
                             </TextBlock.ContextMenu>
                         </TextBlock>
                         <TextBox
                             x:Name="TextBox"
-                            Text="{Binding Data.TreeViewModel.SelectedEditableFolderName, Source={StaticResource MainViewModelDataContextProxy}, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                            Text="{Binding SelectedEditableFolderName, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
                             Visibility="Collapsed">
                             <TextBox.InputBindings>
-                                <KeyBinding Key="Esc" Command="{Binding Data.TreeViewModel.CancelEditing, Source={StaticResource MainViewModelDataContextProxy}}" />
-                                <KeyBinding Key="Return" Command="{Binding Data.TreeViewModel.ConfirmEditing, Source={StaticResource MainViewModelDataContextProxy}}" />
+                                <KeyBinding Key="Esc" Command="{Binding Path=CancelEditing}" />
+                                <KeyBinding Key="Return" Command="{Binding Path=ConfirmEditing}" />
                             </TextBox.InputBindings>
                         </TextBox>
                     </Grid>

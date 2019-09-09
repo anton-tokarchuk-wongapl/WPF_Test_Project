@@ -45,6 +45,7 @@ namespace WPFProject.ViewModels
                 TextBlockViewModel.UpdateItem();
                 TreeViewModel.UpdateFoldersTree = true;
             });
+
             ClearCommand = ReactiveCommand.Create(() => 
             {
                 TextBlockViewModel.Clear();
